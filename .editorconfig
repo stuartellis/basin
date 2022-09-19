@@ -1,0 +1,35 @@
+# Defaults for editor applications
+#
+# https://EditorConfig.org
+
+# Specifies that this is the top-level EditorConfig
+root = true
+
+# Defaults for any type of file
+[*]
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = false
+
+# Set default charset
+[*.{makefile,md,py,tf,tfvars}]
+charset = utf-8
+
+[*.md]
+max_line_length = 0
+
+[*.py]
+indent_style = space
+indent_size = 4
+max_line_length = 88
+
+[*.{tf,tfvars}]
+indent_size = 2
+indent_style = space
+
+# Makefiles require tab indentation
+[Makefile]
+indent_style = tab
+
+[*.makefile]
+indent_style = tab
