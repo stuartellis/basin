@@ -55,3 +55,4 @@ test:
 ## Other Targets
 
 include make/infrastructure/terraform.makefile
+include make/apps/basin.makefile
