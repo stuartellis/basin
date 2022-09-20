@@ -12,7 +12,7 @@ ENV PYTHONUNBUFFERED=1
 ENV PATH="/opt/venv/bin:$PATH"
 RUN python -m venv /opt/venv
 COPY ./requirements.txt ./
-RUN . /opt/venv/bin/activate && pip install --upgrade pip && pip install --no-cache-dir -r requirements.txt
+RUN . /opt/venv/bin/activate && pip install --no-cache-dir --upgrade pip && pip install --no-cache-dir -r requirements.txt
 
 #=========== APP ============
 
