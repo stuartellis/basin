@@ -40,13 +40,18 @@ endif
 
 # Default Target
 
-.DEFAULT_GOAL := test
+.DEFAULT_GOAL := info
 
 ## Project Targets
 
 .PHONY: clean
 clean:
 	git clean -fdx
+
+.PHONY: info
+info:
+	@echo "Environment: $(ENVIRONMENT)"
+	@echo "Maintainers: $(PROJECT_MAINTAINERS)"
 
 .PHONY: test
 test:
