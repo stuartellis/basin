@@ -6,4 +6,5 @@ services:
 build:
   stage: build
   script:
-    - docker build -t basin:test -f /docker/basin.dockerfile
+    - apk add make
+    - make build
