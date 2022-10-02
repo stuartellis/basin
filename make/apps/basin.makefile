@@ -15,6 +15,6 @@ basin\:build:
 
 .PHONY basin:push
 basin\:push:
-	aws ecr get-login-password --region eu-west-2 | docker login --username AWS --password-stdin 333594256635.dkr.ecr.eu-west-2.amazonaws.com
-	docker tag $(DOCKER_IMAGE_TAG) 333594256635.dkr.ecr.eu-west-2.amazonaws.com/$(DOCKER_IMAGE_TAG)
-	docker push 333594256635.dkr.ecr.eu-west-2.amazonaws.com/$(DOCKER_IMAGE_TAG)
+	aws ecr get-login-password --region $(AWS_REGION) | docker login --username AWS --password-stdin $(DOCKER_REGISTRY)
+	docker tag $(DOCKER_IMAGE_TAG) $(DOCKER_REGISTRY)/$(DOCKER_IMAGE_TAG)
+	docker push $(DOCKER_REGISTRY)/$(DOCKER_IMAGE_TAG)

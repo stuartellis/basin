@@ -8,6 +8,7 @@ stages:
 
 build:
   stage: build
+  timeout: 300 seconds
   script:
     - apk add make bash
     - make basin:build

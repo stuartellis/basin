@@ -15,6 +15,9 @@ MAKEFLAGS += --no-builtin-rules
 
 PROJECT_MAINTAINERS	?= "stuart@stuartellis.name"
 ENVIRONMENT			?= dev
+AWS_ACCOUNT_ID		?= 333594256635
+AWS_REGION			?= eu-west-2
+DOCKER_REGISTRY		?= $(AWS_ACCOUNT_ID).dkr.ecr.$(AWS_REGION).amazonaws.com
 TF_STACK			?= app_config
 PROJECT_NAME		?= $(shell basename $(shell pwd))
 TARGET_CPU_ARCH		?= $(shell uname -m)
@@ -52,6 +55,7 @@ clean:
 info:
 	@echo "Environment: $(ENVIRONMENT)"
 	@echo "Maintainers: $(PROJECT_MAINTAINERS)"
+	@echo "Docker Registry: $(DOCKER_REGISTRY)"
 
 .PHONY: test
 test:
