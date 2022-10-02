@@ -6,5 +6,5 @@ services:
 build:
   stage: build
   script:
-    - apk add make
+    - apk add make bash
     - make build
