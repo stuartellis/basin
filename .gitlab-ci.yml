@@ -7,4 +7,4 @@ build:
   stage: build
   script:
     - apk add make bash
-    - make build
+    - make basin:build
