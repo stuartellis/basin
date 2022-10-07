@@ -3,7 +3,7 @@ APP_DOCKER_IMAGE_BASE 		:= python:3.9-slim-bullseye
 APP_SOURCE_HOST_DIR			:= $(shell pwd)/python/basin
 APP_BUILD_DIR				:= $(shell pwd)/tmp/build/basin
 APP_VERSION					:= $(shell grep 'version' $(APP_SOURCE_HOST_DIR)/pyproject.toml | cut -d'=' -f2 | tr -d '"\ ') 
-DOCKER_FILE					:= $(shell pwd)/docker/basin.dockerfile
+DOCKER_FILE					:= $(shell pwd)/docker/basin-app.dockerfile
 DOCKER_IMAGE_TAG			:= $(APP_NAME):$(APP_VERSION)
 
 .PHONY basin:build

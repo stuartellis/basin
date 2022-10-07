@@ -65,3 +65,4 @@ test:
 
 include make/infrastructure/terraform.makefile
 include make/apps/basin.makefile
+include make/infrastructure/aws.makefile
