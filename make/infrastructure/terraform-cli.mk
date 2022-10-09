@@ -2,13 +2,9 @@
 #
 # https://makefiletutorial.com
 
-# Terraform Version
-
-TF_VERSION			:= $(shell grep 'terraform' ./.tool-versions | cut -d' ' -f2)
-
 # Terraform Docker Container
 
-TF_CMD_DOCKER_IMAGE		:= hashicorp/terraform:$(TF_VERSION)
+TF_CMD_DOCKER_IMAGE		:= terraform-tools:3.0
 
 # Other Project Variables for Terraform
 
@@ -34,40 +30,40 @@ TF_RUN_CMD := --rm \
 
 .PHONY terraform:apply
 terraform\:apply:
-	$(DOCKER_RUN_CMD) $(TF_RUN_CMD) -chdir=$(TF_STACK_DIR) apply \
+	@$(DOCKER_RUN_CMD) $(TF_RUN_CMD) -chdir=$(TF_STACK_DIR) apply \
 	$(TF_PLAN_FILE)
 
 .PHONY terraform:check
 terraform\:check:
-	$(DOCKER_RUN_CMD) $(TF_RUN_CMD) fmt -diff -check $(TF_STACK_DIR)
+	@$(DOCKER_RUN_CMD) $(TF_RUN_CMD) fmt -diff -check $(TF_STACK_DIR)
 
 .PHONY terraform:destroy
 terraform\:destroy:
-	$(DOCKER_RUN_CMD) $(TF_RUN_CMD) -chdir=$(TF_STACK_DIR) plan -destroy $(TF_VARS_FILES) \
+	@$(DOCKER_RUN_CMD) $(TF_RUN_CMD) -chdir=$(TF_STACK_DIR) plan -destroy $(TF_VARS_FILES) \
 	-out=destroy-$(TF_PLAN_FILE) && \
     $(TF_CMD) -chdir=$(TF_STACK_DIR) apply destroy-$(TF_PLAN_FILE)
 
 .PHONY terraform:fmt
 terraform\:fmt:
-	$(DOCKER_RUN_CMD) $(TF_RUN_CMD) fmt $(TF_STACK_DIR)
+	@$(DOCKER_RUN_CMD) $(TF_RUN_CMD) fmt $(TF_STACK_DIR)
 
 .PHONY terraform:info
 terraform\:info:
-	$(DOCKER_RUN_CMD) $(TF_RUN_CMD) -version
+	@$(DOCKER_RUN_CMD) $(TF_RUN_CMD) -version
 
 .PHONY terraform:init
 terraform\:init:
-	$(DOCKER_RUN_CMD) $(TF_RUN_CMD) -chdir=$(TF_STACK_DIR) init -backend-config=$(TF_BACKEND_FILE)
+	@$(DOCKER_RUN_CMD) $(TF_RUN_CMD) -chdir=$(TF_STACK_DIR) init -backend-config=$(TF_BACKEND_FILE)
 
 .PHONY terraform:plan
 terraform\:plan:
-	$(DOCKER_RUN_CMD) $(TF_RUN_CMD) -chdir=$(TF_STACK_DIR) plan $(TF_VARS_FILES) \
+	@$(DOCKER_RUN_CMD) $(TF_RUN_CMD) -chdir=$(TF_STACK_DIR) plan $(TF_VARS_FILES) \
 	-out=$(TF_PLAN_FILE)
 
 .PHONY terraform:shell
 terraform\:shell:
-	$(DOCKER_SHELL_CMD) $(TF_RUN_CMD)
+	@$(DOCKER_SHELL_CMD) $(TF_RUN_CMD)
 
 .PHONY terraform:validate
 terraform\:validate:
-	$(DOCKER_RUN_CMD) $(TF_RUN_CMD) -chdir=$(TF_STACK_DIR) validate
+	@$(DOCKER_RUN_CMD) $(TF_RUN_CMD) -chdir=$(TF_STACK_DIR) validate
