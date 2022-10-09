@@ -12,6 +12,7 @@ MAKEFLAGS += --warn-undefined-variables
 MAKEFLAGS += --no-builtin-rules
 
 # Project Variables
+
 PROJECT_NAME		?= "basin"
 PROJECT_MAINTAINERS	?= "stuart@stuartellis.name"
 ENVIRONMENT			?= dev
@@ -65,4 +66,4 @@ info:
 include make/infrastructure/aws.mk
 include make/infrastructure/terraform-container.mk
 include make/infrastructure/terraform-cli.mk
-# include make/apps/basin.mk
+include make/apps/basin.mk
