@@ -31,6 +31,14 @@ DOCKER_RUN_CMD 			:= docker run --rm
 DOCKER_COMPOSE_CMD		:= docker-compose -f $(shell pwd)/docker/compose.yml
 SRC_BIND_DIR			:= /src
 
+# Workspace Path
+
+ifdef LOCAL_WORKSPACE_FOLDER
+    HOST_PROJECT_PATH := $(LOCAL_WORKSPACE_FOLDER)
+else
+	HOST_PROJECT_PATH := $(shell pwd)
+endif
+
 # AWS Credentials
 
 ifdef AWS_ACCESS_KEY_ID
@@ -56,6 +64,7 @@ clean:
 info:
 	@echo "Project: $(PROJECT_NAME)"
 	@echo "Maintainers: $(PROJECT_MAINTAINERS)"
+	@echo "Project Path: $(HOST_PROJECT_PATH)"
 	@echo "Terraform Version: $(TERRAFORM_VERSION)"
 	@echo "Target Environment: $(ENVIRONMENT)"
 	@echo "Target CPU Architecture: $(TARGET_CPU_ARCH)"
