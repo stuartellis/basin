@@ -4,11 +4,11 @@
 
 # Terraform Docker Container
 
-TF_CMD_DOCKER_IMAGE		:= terraform-tools:3.0
+TF_CMD_DOCKER_IMAGE		:= terraform-tools:developer
 
 # Other Project Variables for Terraform
 
-TF_SRC_HOST_DIR		:= $(shell pwd)
+TF_SRC_HOST_DIR		:= $(HOST_PROJECT_PATH)
 TF_BACKENDS_DIR		:= terraform/backends
 TF_BACKEND_FILE		:= $(SRC_BIND_DIR)/$(TF_BACKENDS_DIR)/$(ENVIRONMENT)/$(TF_STACK).backend
 TF_STACKS_DIR		:= terraform/stacks
@@ -18,13 +18,10 @@ TF_PLAN_FILE		:= plan-$(PROJECT_NAME)-$(ENVIRONMENT)-$(TF_STACK).tfstate
 TF_VARS_DIR			:= terraform/variables
 TF_VARS_FILES		:= -var-file=$(SRC_BIND_DIR)/$(TF_VARS_DIR)/project/project.tfvars -var-file=$(SRC_BIND_DIR)/$(TF_VARS_DIR)/environments/$(ENVIRONMENT).tfvars -var-file=$(SRC_BIND_DIR)/$(TF_VARS_DIR)/stacks/$(TF_STACK).tfvars
 
-TF_RUN_CMD := --rm \
-		--user $(shell id -u) \
-		--mount type=bind,source=$(TF_SRC_HOST_DIR),destination=$(SRC_BIND_DIR) \
-		-w $(SRC_BIND_DIR) \
-		--env TF_DATA_DIR=$(TF_DATA_DIR) \
-		$(DOCKER_AWS_CREDENTIALS) \
-		$(TF_CMD_DOCKER_IMAGE)
+TF_RUN_CMD := --user $(shell id -u) \
+ 	--mount type=bind,source=$(TF_SRC_HOST_DIR),destination=$(SRC_BIND_DIR) \
+ 	-w $(SRC_BIND_DIR) \
+ 	$(TF_CMD_DOCKER_IMAGE) terraform
 
 # Terraform Targets
 
@@ -49,7 +46,7 @@ terraform\:fmt:
 
 .PHONY terraform:info
 terraform\:info:
-	@$(DOCKER_RUN_CMD) $(TF_RUN_CMD) -version
+	@$(DOCKER_RUN_CMD) $(TF_RUN_CMD) version
 
 .PHONY terraform:init
 terraform\:init:

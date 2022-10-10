@@ -17,12 +17,9 @@ PROJECT_NAME		?= basin
 PROJECT_MAINTAINERS	?= stuart@stuartellis.name
 ENVIRONMENT			?= dev
 AWS_ACCOUNT_ID		?= 333594256635
-AWS_REGION			?= eu-west-2
 AWS_ECR_ROLE		?= arn:aws:iam::333594256635:role/SjeEcrPublish
 DOCKER_REGISTRY		?= $(AWS_ACCOUNT_ID).dkr.ecr.$(AWS_REGION).amazonaws.com
-TF_STACK			?= app_config
 TARGET_CPU_ARCH		?= $(shell uname -m)
-AWSCLI_VERSION		?= $(shell grep 'aws-cli' ./.tool-versions | cut -d' ' -f2)
 TERRAFORM_VERSION	?= $(shell grep 'terraform' ./.tool-versions | cut -d' ' -f2)
 
 # Docker Commands
@@ -67,7 +64,6 @@ info:
 	@echo "Project: $(PROJECT_NAME)"
 	@echo "Maintainers: $(PROJECT_MAINTAINERS)"
 	@echo "Project Path: $(HOST_PROJECT_PATH)"
-	@echo "AWS CLI Version:" $(AWSCLI_VERSION)
 	@echo "Terraform Version: $(TERRAFORM_VERSION)"
 	@echo "Target Environment: $(ENVIRONMENT)"
 	@echo "Target CPU Architecture: $(TARGET_CPU_ARCH)"
@@ -75,8 +71,6 @@ info:
 
 ## Other Targets
 
-include make/infrastructure/aws-tools-container.mk
-include make/infrastructure/aws-cli.mk
 include make/infrastructure/terraform-tools-container.mk
 include make/infrastructure/terraform-cli.mk
 include make/apps/basin.mk

@@ -37,4 +37,4 @@ RUN addgroup appusers \
 COPY --from=builder --chown=appuser:appusers /usr/local/bin /usr/local/bin
 WORKDIR /usr/local/bin
 USER appuser
-CMD ["terraform"]
+CMD ["terraform", "version"]

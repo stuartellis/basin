@@ -1,6 +1,6 @@
 TFTOOLS_APP_NAME				:= terraform-tools
 TFTOOLS_DOCKER_IMAGE_BASE 		:= alpine:3.16.2
-TFTOOLS_VERSION					:= $(shell date -u +"%Y%m%dT%H%M%SZ")
+TFTOOLS_VERSION					?= developer
 TFTOOLS_SOURCE_HOST_DIR			:= $(shell pwd)
 TFTOOLS_DOCKER_FILE				:= $(shell pwd)/docker/terraform-tools.dockerfile
 TFTOOLS_IMAGE_TAG				:= $(TFTOOLS_APP_NAME):$(TFTOOLS_VERSION)
