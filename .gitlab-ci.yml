@@ -1,14 +1,18 @@
-image: docker:20.10.18
+variables:
+  AWS_REGION: eu-west-2
+  DOCKER_HOST: tcp://docker:2375
 
-services:
-  - docker:20.10.18-dind
-
-stages:
-  - build
-
-build:
-  stage: build
-  timeout: 300 seconds
+publish:
+  image: 
+    name: amazon/aws-cli:2.8.2
+    entrypoint: [""]
+  services:
+    - docker:20.10.18-dind
+  before_script:
+    - yum install -y make
+    - amazon-linux-extras install -y docker
+    - aws --version
+    - docker --version
   script:
-    - apk add make bash
     - make basin:build
+    - make basin:push
