@@ -28,7 +28,7 @@ TERRAFORM_VERSION	?= $(shell grep 'terraform' ./.tool-versions | cut -d' ' -f2)
 DOCKER_BUILD_CMD 		:= docker build
 DOCKER_SHELL_CMD		:= docker run --rm -it --entrypoint /bin/sh
 DOCKER_RUN_CMD 			:= docker run --rm
-DOCKER_COMPOSE_CMD		:= docker-compose -f $(shell pwd)/docker/compose.yml
+DOCKER_COMPOSE_CMD		:= docker-compose -f $(shell pwd)/docker/docker-compose.yml
 SRC_BIND_DIR			:= /src
 
 # Workspace Path
