@@ -19,6 +19,7 @@ ENVIRONMENT			?= dev
 AWS_ACCOUNT_ID		?= 333594256635
 AWS_ECR_ROLE		?= arn:aws:iam::333594256635:role/SjeEcrPublish
 DOCKER_REGISTRY		?= $(AWS_ACCOUNT_ID).dkr.ecr.$(AWS_REGION).amazonaws.com
+
 TARGET_CPU_ARCH		?= $(shell uname -m)
 TERRAFORM_VERSION	?= $(shell grep 'terraform' ./.tool-versions | cut -d' ' -f2)
 
