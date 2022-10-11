@@ -7,10 +7,10 @@ publish:
     name: amazon/aws-cli:2.8.2
     entrypoint: [""]
   services:
-    - docker:20.10.18-dind
+    - docker:20.10.17-dind
   before_script:
-    - yum install -y make
-    - amazon-linux-extras install -y docker
+    - yum install -q -y make
+    - amazon-linux-extras install -q -y docker=20.10.17
     - aws --version
     - docker --version
   script:
