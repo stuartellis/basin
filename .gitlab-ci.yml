@@ -10,7 +10,7 @@ publish:
     - docker:20.10.17-dind
   before_script:
     - yum install -q -y make
-    - amazon-linux-extras install -q -y docker
+    - amazon-linux-extras install -y docker
     - aws --version
     - docker --version
   script:
