@@ -8,7 +8,7 @@ DOCKER_IMAGE_TAG			:= $(APP_NAME):$(APP_VERSION)
 
 .PHONY basin:build
 basin\:build:
-	$(DOCKER_BUILD_CMD) $(APP_SOURCE_HOST_DIR) --platform $(TARGET_CPU_ARCH) -f $(DOCKER_FILE) -t $(DOCKER_IMAGE_TAG) \
+	@$(DOCKER_BUILD_CMD) $(APP_SOURCE_HOST_DIR) --platform $(TARGET_CPU_ARCH) -f $(DOCKER_FILE) -t $(DOCKER_IMAGE_TAG) \
 	--build-arg DOCKER_IMAGE_BASE=$(APP_DOCKER_IMAGE_BASE) \
 	--label org.opencontainers.image.version=$(APP_VERSION) \
 	--label org.opencontainers.image.authors=$(PROJECT_MAINTAINERS)

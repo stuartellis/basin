@@ -65,7 +65,7 @@ info:
 	@echo "Project: $(PROJECT_NAME)"
 	@echo "Maintainers: $(PROJECT_MAINTAINERS)"
 	@echo "Project Path: $(HOST_PROJECT_PATH)"
-	@echo "Terraform Version: $(TERRAFORM_VERSION)"
+	@echo "Target Terraform Version: $(TERRAFORM_VERSION)"
 	@echo "Target Environment: $(ENVIRONMENT)"
 	@echo "Target CPU Architecture: $(TARGET_CPU_ARCH)"
 	@echo "Docker Registry: $(DOCKER_REGISTRY)"

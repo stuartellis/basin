@@ -16,3 +16,4 @@ publish:
   script:
     - make info
     - make basin:build
+    - make basin:push
