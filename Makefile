@@ -21,6 +21,7 @@ AWS_ECR_ROLE		?= arn:aws:iam::333594256635:role/SjeEcrPublish
 DOCKER_REGISTRY		?= $(AWS_ACCOUNT_ID).dkr.ecr.eu-west-2.amazonaws.com
 
 TARGET_CPU_ARCH		?= $(shell uname -m)
+TARGET_PLATFORM		?= $(uname -s | awk '{ print tolower($0); }')/$(TARGET_CPU_ARCH)
 TERRAFORM_VERSION	?= $(shell grep 'terraform' ./.tool-versions | cut -d' ' -f2)
 
 # Docker Commands

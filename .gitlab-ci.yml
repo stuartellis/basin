@@ -15,5 +15,5 @@ publish:
     - docker --version
   script:
     - make info
-    - make basin:build TARGET_CPU_ARCH=arm64
+    - make basin:build TARGET_PLATFORM=arm64
     - make basin:push
