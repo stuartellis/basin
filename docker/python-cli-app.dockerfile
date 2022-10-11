@@ -4,6 +4,11 @@ ARG DOCKER_IMAGE_BASE=python:3.9-slim-bullseye
 
 FROM ${DOCKER_IMAGE_BASE} as base_python
 
+RUN apt-get update && \
+  apt-get upgrade -y && \
+  apt-get autoremove && \
+  apt-get clean
+
 #========== BUILDER ==========
 
 FROM base_python as builder
