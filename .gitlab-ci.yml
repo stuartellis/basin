@@ -10,10 +10,10 @@ publish:
     - docker:20.10.17-dind
   before_script:
     - yum install -q -y make
-    - amazon-linux-extras install -y docker
-    - aws --version
-    - docker --version
+    #- amazon-linux-extras install -y docker
+    #- aws --version
+    #- docker --version
   script:
     - make info
-    - make basin:build TARGET_CPU_ARCH=arm64
-    - make basin:push
+    # - make basin:build TARGET_CPU_ARCH=arm64
+    # - make basin:push
