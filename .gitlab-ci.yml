@@ -4,16 +4,17 @@ variables:
 
 publish:
   image: 
-    name: amazon/aws-cli:2.8.2
+    name: amazonlinux:2.0.20220912.1
     entrypoint: [""]
   services:
     - docker:20.10.17-dind
   before_script:
-    - yum install -q -y make
-    - amazon-linux-extras install -y docker
+    - yum update -q -y
+    - amazon-linux-extras enable docker > /dev/null
+    - yum install -q -y make docker-20.10.17-1.amzn2.0.1 awscli-1.18.147-1.amzn2.0.1
     - aws --version
     - docker --version
   script:
     - make info
-    - make basin:build
-    - make basin:push
+    # - make basin:build
+    # - make basin:push
