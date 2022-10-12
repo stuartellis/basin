@@ -5,7 +5,7 @@
 # Configuration for Make
 
 SHELL := /bin/bash
-.SHELLFLAGS := -eu -o pipefail
+.SHELLFLAGS := -euc
 .ONESHELL:
 .DELETE_ON_ERROR:
 MAKEFLAGS += --warn-undefined-variables
