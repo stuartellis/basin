@@ -22,8 +22,9 @@
 	"remoteUser": "vscode",
 	"features": {
 		"aws-cli": "2.8.2",
-		"docker-in-docker": "20.10",
-		"git": "os-provided"
+		"docker-in-docker": "20.10.17",
+		"git": "os-provided",
+		"python": "3.9.14"
 	},
 	"customizations": {
 		"vscode": {
