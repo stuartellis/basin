@@ -22,10 +22,9 @@ basin-info:
 
 .PHONY basin-push:
 basin-push:
-	$(shell echo $(ECR_ROLE_CREDENTIALS) | jq -r '.Credentials.AccessKeyId')
-# @aws ecr get-login-password --region $(AWS_REGION) | docker login --username AWS --password-stdin $(DOCKER_REGISTRY)
-# @docker tag $(APP_DOCKER_IMAGE_TAG) $(DOCKER_REGISTRY)/$(APP_DOCKER_IMAGE_TAG)
-# @docker push $(DOCKER_REGISTRY)/$(APP_DOCKER_IMAGE_TAG)
+	@aws ecr get-login-password --region $(AWS_REGION) | docker login --username AWS --password-stdin $(DOCKER_REGISTRY)
+	@docker tag $(APP_DOCKER_IMAGE_TAG) $(DOCKER_REGISTRY)/$(APP_DOCKER_IMAGE_TAG)
+	@docker push $(DOCKER_REGISTRY)/$(APP_DOCKER_IMAGE_TAG)
 
 .PHONY basin-start:
 basin-start:
