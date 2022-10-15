@@ -13,8 +13,6 @@ basin-build:
 	--label org.opencontainers.image.version=$(APP_VERSION) \
 	--label org.opencontainers.image.authors=$(PROJECT_MAINTAINERS)
 
-ECR_ROLE_CREDENTIALS := $(shell aws sts assume-role --role-arn $(AWS_ECR_ROLE) --role-session-name $(PROJECT_NAME)-$(ENVIRONMENT) --output json)
-
 .PHONY basin-info:
 basin-info:
 	@echo "App Name: $(APP_NAME)"

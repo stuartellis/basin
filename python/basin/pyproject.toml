@@ -1,8 +1,0 @@
-[project]
-name        = "basin"
-description = "Test app"
-version     = "0.4.3" 
-requires-python = ">=3.9" 
-authors = [
-    { name = "Stuart Ellis", email = "stuart@stuartellis.name" }
-]

@@ -16,9 +16,7 @@ MAKEFLAGS += --no-builtin-rules
 PROJECT_NAME		?= basin
 PROJECT_MAINTAINERS	?= stuart@stuartellis.name
 ENVIRONMENT			?= dev
-AWS_ACCOUNT_ID		?= 333594256635
-AWS_ECR_ROLE		?= arn:aws:iam::333594256635:role/SjeEcrPublish
-DOCKER_REGISTRY		?= $(AWS_ACCOUNT_ID).dkr.ecr.eu-west-2.amazonaws.com
+DOCKER_REGISTRY		?= 333594256635.dkr.ecr.eu-west-2.amazonaws.com
 
 TARGET_CPU_ARCH		?= $(shell uname -m)
 TARGET_PLATFORM		?= linux/$(TARGET_CPU_ARCH)
