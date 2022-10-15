@@ -4,7 +4,7 @@ set -euo pipefail
 
 TIMESTAMP=$(date -u +"%Y%m%dT%H%M%SZ")
 AWS_CREDS_FILE=/tmp/$2-$TIMESTAMP.json
-AWS_SESSION_DURATION=900
+AWS_SESSION_DURATION=900 # 900 seconds is the minimum value allowed
 
 aws sts assume-role \
     --role-arn $1 \
@@ -45,5 +45,4 @@ fi
 
 export AWS_SESSION_TOKEN=$(jq -r '.Credentials.SessionToken' $AWS_CREDS_FILE)
 
-echo $AWS_CREDS_FILE
-rm $AWS_CREDS_FILE
+rm -f $AWS_CREDS_FILE

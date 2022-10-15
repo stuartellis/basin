@@ -10,13 +10,10 @@ publish:
   services:
     - docker:20.10.17-dind
   before_script:
-    - yum install -q -y deltarpm
-    - yum update -q -y
+    - yum update -q -y --disableplugin=presto
     - amazon-linux-extras enable docker > /dev/null
     - yum install -q -y jq make-3.82-24.amzn2 docker-20.10.17-1.amzn2.0.1 awscli-1.18.147-1.amzn2.0.1
   script:
     - aws sts get-caller-identity
     - source ./scripts/assume-iam-role.sh $AWS_ECR_ROLE basin
     - aws sts get-caller-identity
-    # - make basin-build
-    # - make basin-push
