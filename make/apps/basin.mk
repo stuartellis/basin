@@ -25,7 +25,6 @@ basin-push:
 	@aws ecr get-login-password --region $(AWS_REGION) | docker login --username AWS --password-stdin $(DOCKER_REGISTRY)
 	@docker tag $(APP_DOCKER_IMAGE_TAG) $(DOCKER_REGISTRY)/$(APP_DOCKER_IMAGE_TAG)
 	@docker push $(DOCKER_REGISTRY)/$(APP_DOCKER_IMAGE_TAG)
-	@echo $(HOME)/.docker/config.json
 	@rm $(HOME)/.docker/config.json
 
 .PHONY basin-start:
