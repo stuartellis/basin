@@ -15,9 +15,9 @@ aws sts assume-role \
 if [[ ! -v AWS_ACCESS_KEY_ID ]]; then
     echo "AWS_ACCESS_KEY_ID is not set"
 elif [[ -z "$AWS_ACCESS_KEY_ID" ]]; then
-    echo "AWS_ACCESS_KEY_ID is set to the empty string"
+    echo "AWS_ACCESS_KEY_ID is set as an empty string"
 else
-    echo "AWS_ACCESS_KEY_ID has the value: $AWS_ACCESS_KEY_ID"
+    echo "AWS_ACCESS_KEY_ID has the existing value: $AWS_ACCESS_KEY_ID"
     unset AWS_ACCESS_KEY_ID
 fi
 
@@ -26,9 +26,9 @@ export AWS_ACCESS_KEY_ID=$(jq -r '.Credentials.AccessKeyId' $AWS_CREDS_FILE)
 if [[ ! -v AWS_SECRET_ACCESS_KEY ]]; then
     echo "AWS_SECRET_ACCESS_KEY is not set"
 elif [[ -z "$AWS_SECRET_ACCESS_KEY" ]]; then
-    echo "AWS_SECRET_ACCESS_KEY is set to the empty string"
+    echo "AWS_SECRET_ACCESS_KEY is set as an empty string"
 else
-    echo "AWS_SECRET_ACCESS_KEY has a value"
+    echo "AWS_SECRET_ACCESS_KEY has an existing value"
     unset AWS_SECRET_ACCESS_KEY
 fi
 
@@ -37,9 +37,9 @@ export AWS_SECRET_ACCESS_KEY=$(jq -r '.Credentials.SecretAccessKey' $AWS_CREDS_F
 if [[ ! -v AWS_SESSION_TOKEN ]]; then
     echo "AWS_SESSION_TOKEN is not set"
 elif [[ -z "$AWS_SESSION_TOKEN" ]]; then
-    echo "AWS_SESSION_TOKEN is set to the empty string"
+    echo "AWS_SESSION_TOKEN is set as an empty string"
 else
-    echo "AWS_SESSION_TOKEN has a value"
+    echo "AWS_SESSION_TOKEN has an existing value"
     unset AWS_SESSION_TOKEN
 fi
 
