@@ -43,5 +43,7 @@ else
     unset AWS_SESSION_TOKEN
 fi
 
+export AWS_SESSION_TOKEN=$(jq -r '.Credentials.SessionToken' $AWS_CREDS_FILE)
+
 echo $AWS_CREDS_FILE
 rm $AWS_CREDS_FILE
