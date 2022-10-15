@@ -69,6 +69,7 @@ info:
 	@echo "Target CPU Architecture: $(TARGET_CPU_ARCH)"
 	@echo "Target Docker Platform: $(TARGET_PLATFORM)"
 	@echo "Docker Registry: $(DOCKER_REGISTRY)"
+	@echo  $(HOME)
 
 ## Other Targets
 
