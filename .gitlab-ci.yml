@@ -2,6 +2,7 @@ variables:
   AWS_REGION: eu-west-2
   AWS_ECR_ROLE: arn:aws:iam::333594256635:role/SjeEcrPublish
   DOCKER_HOST: tcp://docker:2375
+  TARGET_CPU_ARCH: arm64
 
 publish:
   image: 
@@ -14,8 +15,8 @@ publish:
     - amazon-linux-extras enable docker > /dev/null
     - yum install -q -y jq-1.5-1.amzn2.0.2 make-3.82-24.amzn2 docker-20.10.17-1.amzn2.0.1 awscli-1.18.147-1.amzn2.0.1
   script:
-    - aws sts get-caller-identity
+    - aws sts get-caller-identity # FIXME: Remove when no longer needed
     - source ./scripts/assume-iam-role.sh $AWS_ECR_ROLE basin
-    - aws sts get-caller-identity
-    - make basin-build
+    - aws sts get-caller-identity # FIXME: Remove when no longer needed
+    - make basin-build TARGET_CPU_ARCH=$TARGET_CPU_ARCH
     - make basin-push
