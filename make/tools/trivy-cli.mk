@@ -4,7 +4,7 @@
 
 # Trivy Docker Container
 
-TRIVY_CMD_DOCKER_IMAGE		:= aquasec/trivy:0.32.1
+TRIVY_CMD_DOCKER_IMAGE		:= aquasec/trivy:$(TRIVY_VERSION)
 TRIVY_CACHE_DIR				:= ./tmp/cache/trivy
 
 # Other Project Variables for Trivy
