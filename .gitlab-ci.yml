@@ -11,12 +11,13 @@ publish:
   services:
     - docker:20.10.17-dind
   before_script:
-    - yum update -q -y
-    - amazon-linux-extras enable docker > /dev/null
+    # - yum update -q -y
+    # - amazon-linux-extras enable docker > /dev/null
     - yum install -q -y jq-1.5-1.amzn2.0.2 make-3.82-24.amzn2 docker-20.10.17-1.amzn2.0.1 awscli-1.18.147-1.amzn2.0.1
   script:
-    - aws sts get-caller-identity # FIXME: Remove when no longer needed
-    - source ./scripts/assume-iam-role.sh $AWS_ECR_ROLE basin
-    - aws sts get-caller-identity # FIXME: Remove when no longer needed
-    - make basin-build TARGET_CPU_ARCH=$TARGET_CPU_ARCH
-    - make basin-push
+    - make info
+    # - aws sts get-caller-identity # FIXME: Remove when no longer needed
+    # - source ./scripts/assume-iam-role.sh $AWS_ECR_ROLE basin
+    # - aws sts get-caller-identity # FIXME: Remove when no longer needed
+    # - make basin-build TARGET_CPU_ARCH=$TARGET_CPU_ARCH
+    # - make basin-push
