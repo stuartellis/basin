@@ -1,6 +1,5 @@
 # Makefile
 #
-# https://makefiletutorial.com
 
 # Configuration for Make
 
@@ -33,22 +32,22 @@ SRC_BIND_DIR			:= /src
 
 # Workspace Path
 
-ifdef LOCAL_WORKSPACE_FOLDER
-    HOST_PROJECT_PATH := $(LOCAL_WORKSPACE_FOLDER)
-else
-	HOST_PROJECT_PATH := $(shell pwd)
-endif
+# ifdef LOCAL_WORKSPACE_FOLDER
+#     HOST_PROJECT_PATH := $(LOCAL_WORKSPACE_FOLDER)
+# else
+# 	HOST_PROJECT_PATH := $(shell pwd)
+# endif
 
 # AWS Credentials
 
-ifdef AWS_ACCESS_KEY_ID
-    DOCKER_AWS_CREDENTIALS := --env AWS_ACCESS_KEY_ID=$(AWS_ACCESS_KEY_ID) \
-		--env AWS_SECRET_ACCESS_KEY=$(AWS_SECRET_ACCESS_KEY) \
-		--env AWS_SESSION_TOKEN=$(AWS_SESSION_TOKEN) \
-		--env AWS_PROFILE=$(AWS_PROFILE)
-else
-	DOCKER_AWS_CREDENTIALS :=
-endif
+# ifdef AWS_ACCESS_KEY_ID
+#     DOCKER_AWS_CREDENTIALS := --env AWS_ACCESS_KEY_ID=$(AWS_ACCESS_KEY_ID) \
+# 		--env AWS_SECRET_ACCESS_KEY=$(AWS_SECRET_ACCESS_KEY) \
+# 		--env AWS_SESSION_TOKEN=$(AWS_SESSION_TOKEN) \
+# 		--env AWS_PROFILE=$(AWS_PROFILE)
+# else
+# 	DOCKER_AWS_CREDENTIALS :=
+# endif
 
 # Default Target
 
@@ -56,9 +55,9 @@ endif
 
 ## Project Targets
 
-.PHONY: clean
-clean:
-	git clean -fdx
+# .PHONY: clean
+# clean:
+# 	git clean -fdx
 
 .PHONY: info
 info:
@@ -74,7 +73,7 @@ info:
 
 ## Other Targets
 
-include make/tools/terraform-tools-container.mk
-include make/tools/terraform-cli.mk
-include make/tools/trivy-cli.mk
-include make/apps/basin.mk
+# include make/tools/terraform-tools-container.mk
+# include make/tools/terraform-cli.mk
+# include make/tools/trivy-cli.mk
+# include make/apps/basin.mk
