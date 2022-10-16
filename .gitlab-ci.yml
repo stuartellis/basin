@@ -2,7 +2,7 @@ variables:
   AWS_REGION: eu-west-2
   AWS_ECR_ROLE: arn:aws:iam::333594256635:role/SjeEcrPublish
   DOCKER_HOST: tcp://docker:2375
-  TARGET_CPU_ARCH: arm64
+  TARGET_CPU_ARCH: x86_64
 
 publish:
   image: 
@@ -12,7 +12,7 @@ publish:
     - docker:20.10.17-dind
   before_script:
     - yum update -q -y
-    - yum install -q -y awscli-2-2.7.8-1.amzn2022 docker-20.10.17-1.amzn2022.0.1 jq-1.6-10.amzn2022.x86_64 make-4.3-5.amzn2022
+    - yum install -q -y awscli-2-2.7.8-1.amzn2022.0.3 docker-20.10.17-1.amzn2022.0.1 jq-1.6-10.amzn2022.x86_64 make-4.3-5.amzn2022
   script:
     - make --version
     - make info
