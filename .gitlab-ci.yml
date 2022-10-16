@@ -6,16 +6,13 @@ variables:
 
 publish:
   image: 
-    name: alpine:3.16.2
-    # name: amazonlinux:2.0.20220912.1
+    # name: alpine:3.16.2
+    name: amazonlinux:2.0.20220912.1
     # entrypoint: [""]
   services:
     - docker:20.10.17-dind
   before_script:
-    - apk add bash make
-    # - yum update -q -y
-    # - amazon-linux-extras enable docker > /dev/null
-    # - yum install -q -y jq-1.5-1.amzn2.0.2 make-3.82-24.amzn2 docker-20.10.17-1.amzn2.0.1 awscli-1.18.147-1.amzn2.0.1
+    - yum install -q -y awscli-2-2.7.8-1.amzn2022 docker-20.10.17-1.amzn2022.0.1 jq-1.6-10.amzn2022.x86_64 make-4.3-5.amzn2022
   script:
     - make --version
     - make info
