@@ -21,6 +21,7 @@ DOCKER_REGISTRY		?= 333594256635.dkr.ecr.eu-west-2.amazonaws.com
 TARGET_CPU_ARCH		?= $(shell uname -m)
 TARGET_PLATFORM		?= linux/$(TARGET_CPU_ARCH)
 TERRAFORM_VERSION	?= $(shell grep 'terraform' ./.tool-versions | cut -d' ' -f2)
+TRIVY_VERSION		?= $(shell grep 'trivy' ./.tool-versions | cut -d' ' -f2)
 
 # Docker Commands
 
@@ -64,6 +65,7 @@ info:
 	@echo "Project: $(PROJECT_NAME)"
 	@echo "Maintainers: $(PROJECT_MAINTAINERS)"
 	@echo "Project Path: $(HOST_PROJECT_PATH)"
+	@echo "Trivy Scanner Version: $(TRIVY_VERSION)"
 	@echo "Target Terraform Version: $(TERRAFORM_VERSION)"
 	@echo "Target Environment: $(ENVIRONMENT)"
 	@echo "Target CPU Architecture: $(TARGET_CPU_ARCH)"
