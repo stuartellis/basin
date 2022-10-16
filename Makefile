@@ -51,7 +51,7 @@ MAKEFLAGS += --no-builtin-rules
 
 # Default Target
 
-.DEFAULT_GOAL := info
+.DEFAULT_GOAL := clean
 
 ## Project Targets
 
@@ -59,9 +59,11 @@ MAKEFLAGS += --no-builtin-rules
 # clean:
 # 	git clean -fdx
 
-.PHONY: info
-info:
-	echo "Hello world"
+clean:
+	rm -rf tmp
+	rm -rf out
+.PHONY: clean
+
 #@echo "Project: $(PROJECT_NAME)"
 # @echo "Maintainers: $(PROJECT_MAINTAINERS)"
 # @echo "Project Path: $(HOST_PROJECT_PATH)"
