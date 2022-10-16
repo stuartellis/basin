@@ -1,5 +1,4 @@
 # Makefile
-#
 
 # Configuration for Make
 
@@ -12,31 +11,31 @@ MAKEFLAGS += --no-builtin-rules
 
 # Project Variables
 
-# PROJECT_NAME		?= basin
-# PROJECT_MAINTAINERS	?= stuart@stuartellis.name
-# ENVIRONMENT			?= dev
-# DOCKER_REGISTRY		?= 333594256635.dkr.ecr.eu-west-2.amazonaws.com
+PROJECT_NAME			?= basin
+PROJECT_MAINTAINERS		?= stuart@stuartellis.name
+ENVIRONMENT				?= dev
+DOCKER_REGISTRY			?= 333594256635.dkr.ecr.eu-west-2.amazonaws.com
 
-# TARGET_CPU_ARCH		?= $(shell uname -m)
-# TARGET_PLATFORM		?= linux/$(TARGET_CPU_ARCH)
-# TERRAFORM_VERSION	?= $(shell grep 'terraform' ./.tool-versions | cut -d' ' -f2)
-# TRIVY_VERSION		?= $(shell grep 'trivy' ./.tool-versions | cut -d' ' -f2)
+TARGET_CPU_ARCH			?= $(shell uname -m)
+TARGET_PLATFORM			?= linux/$(TARGET_CPU_ARCH)
+TERRAFORM_VERSION		?= $(shell grep 'terraform' ./.tool-versions | cut -d' ' -f2)
+TRIVY_VERSION			?= $(shell grep 'trivy' ./.tool-versions | cut -d' ' -f2)
 
 # Docker Commands
 
-# DOCKER_BUILD_CMD 		:= docker build
-# DOCKER_SHELL_CMD		:= docker run --rm -it --entrypoint /bin/sh
-# DOCKER_RUN_CMD 			:= docker run --rm
-# DOCKER_COMPOSE_CMD		:= docker-compose -f $(shell pwd)/docker/docker-compose.yml
-# SRC_BIND_DIR			:= /src
+DOCKER_BUILD_CMD 		:= docker build
+DOCKER_SHELL_CMD		:= docker run --rm -it --entrypoint /bin/sh
+DOCKER_RUN_CMD 			:= docker run --rm
+DOCKER_COMPOSE_CMD		:= docker-compose -f $(shell pwd)/docker/docker-compose.yml
+SRC_BIND_DIR			:= /src
 
 # Workspace Path
 
-# ifdef LOCAL_WORKSPACE_FOLDER
-#     HOST_PROJECT_PATH := $(LOCAL_WORKSPACE_FOLDER)
-# else
-# 	HOST_PROJECT_PATH := $(shell pwd)
-# endif
+ifdef LOCAL_WORKSPACE_FOLDER
+    HOST_PROJECT_PATH := $(LOCAL_WORKSPACE_FOLDER)
+else
+	HOST_PROJECT_PATH := $(shell pwd)
+endif
 
 # AWS Credentials
 
@@ -51,28 +50,26 @@ MAKEFLAGS += --no-builtin-rules
 
 # Default Target
 
-.DEFAULT_GOAL := clean
+.DEFAULT_GOAL := info
 
 ## Project Targets
 
-# .PHONY: clean
-# clean:
-# 	git clean -fdx
-
+.PHONY: clean
 clean:
 	rm -rf tmp
 	rm -rf out
-.PHONY: clean
 
-#@echo "Project: $(PROJECT_NAME)"
-# @echo "Maintainers: $(PROJECT_MAINTAINERS)"
-# @echo "Project Path: $(HOST_PROJECT_PATH)"
-# @echo "Trivy Scanner Version: $(TRIVY_VERSION)"
-# @echo "Target Terraform Version: $(TERRAFORM_VERSION)"
-# @echo "Target Environment: $(ENVIRONMENT)"
-# @echo "Target CPU Architecture: $(TARGET_CPU_ARCH)"
-# @echo "Target Docker Platform: $(TARGET_PLATFORM)"
-# @echo "Docker Registry: $(DOCKER_REGISTRY)"
+.PHONY: info
+info:
+	@echo "Project: $(PROJECT_NAME)"
+	@echo "Maintainers: $(PROJECT_MAINTAINERS)"
+	@echo "Project Path: $(HOST_PROJECT_PATH)"
+	@echo "Trivy Scanner Version: $(TRIVY_VERSION)"
+	@echo "Target Terraform Version: $(TERRAFORM_VERSION)"
+	@echo "Target Environment: $(ENVIRONMENT)"
+	@echo "Target CPU Architecture: $(TARGET_CPU_ARCH)"
+	@echo "Target Docker Platform: $(TARGET_PLATFORM)"
+	@echo "Docker Registry: $(DOCKER_REGISTRY)"
 
 ## Other Targets
 
