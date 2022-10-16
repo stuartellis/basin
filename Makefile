@@ -3,7 +3,7 @@
 
 # Configuration for Make
 
-SHELL := bash -o pipefail
+SHELL := bash
 .ONESHELL:
 .SHELLFLAGS := -eu -c
 .DELETE_ON_ERROR:
