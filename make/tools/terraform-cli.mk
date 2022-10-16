@@ -1,6 +1,6 @@
 # Makefile for Terraform
 #
-# https://makefiletutorial.com
+# https://www.terraform.io/
 
 # Terraform Docker Container
 

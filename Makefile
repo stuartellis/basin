@@ -73,6 +73,7 @@ info:
 
 ## Other Targets
 
-include make/infrastructure/terraform-tools-container.mk
-include make/infrastructure/terraform-cli.mk
+include make/tools/terraform-tools-container.mk
+include make/tools/terraform-cli.mk
+include make/tools/trivy-cli.mk
 include make/apps/basin.mk
