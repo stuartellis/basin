@@ -63,15 +63,14 @@ clean:
 .PHONY: info
 info:
 	@echo "Project: $(PROJECT_NAME)"
-	@echo "Maintainers: $(PROJECT_MAINTAINERS)"
-	@echo "Project Path: $(HOST_PROJECT_PATH)"
-	@echo "Trivy Scanner Version: $(TRIVY_VERSION)"
-	@echo "Target Terraform Version: $(TERRAFORM_VERSION)"
-	@echo "Target Environment: $(ENVIRONMENT)"
-	@echo "Target CPU Architecture: $(TARGET_CPU_ARCH)"
-	@echo "Target Docker Platform: $(TARGET_PLATFORM)"
-	@echo "Docker Registry: $(DOCKER_REGISTRY)"
-	@echo  $(HOME)
+# @echo "Maintainers: $(PROJECT_MAINTAINERS)"
+# @echo "Project Path: $(HOST_PROJECT_PATH)"
+# @echo "Trivy Scanner Version: $(TRIVY_VERSION)"
+# @echo "Target Terraform Version: $(TERRAFORM_VERSION)"
+# @echo "Target Environment: $(ENVIRONMENT)"
+# @echo "Target CPU Architecture: $(TARGET_CPU_ARCH)"
+# @echo "Target Docker Platform: $(TARGET_PLATFORM)"
+# @echo "Docker Registry: $(DOCKER_REGISTRY)"
 
 ## Other Targets
 
