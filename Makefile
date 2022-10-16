@@ -12,23 +12,23 @@ MAKEFLAGS += --no-builtin-rules
 
 # Project Variables
 
-PROJECT_NAME		?= basin
-PROJECT_MAINTAINERS	?= stuart@stuartellis.name
-ENVIRONMENT			?= dev
-DOCKER_REGISTRY		?= 333594256635.dkr.ecr.eu-west-2.amazonaws.com
+# PROJECT_NAME		?= basin
+# PROJECT_MAINTAINERS	?= stuart@stuartellis.name
+# ENVIRONMENT			?= dev
+# DOCKER_REGISTRY		?= 333594256635.dkr.ecr.eu-west-2.amazonaws.com
 
-TARGET_CPU_ARCH		?= $(shell uname -m)
-TARGET_PLATFORM		?= linux/$(TARGET_CPU_ARCH)
-TERRAFORM_VERSION	?= $(shell grep 'terraform' ./.tool-versions | cut -d' ' -f2)
-TRIVY_VERSION		?= $(shell grep 'trivy' ./.tool-versions | cut -d' ' -f2)
+# TARGET_CPU_ARCH		?= $(shell uname -m)
+# TARGET_PLATFORM		?= linux/$(TARGET_CPU_ARCH)
+# TERRAFORM_VERSION	?= $(shell grep 'terraform' ./.tool-versions | cut -d' ' -f2)
+# TRIVY_VERSION		?= $(shell grep 'trivy' ./.tool-versions | cut -d' ' -f2)
 
 # Docker Commands
 
-DOCKER_BUILD_CMD 		:= docker build
-DOCKER_SHELL_CMD		:= docker run --rm -it --entrypoint /bin/sh
-DOCKER_RUN_CMD 			:= docker run --rm
-DOCKER_COMPOSE_CMD		:= docker-compose -f $(shell pwd)/docker/docker-compose.yml
-SRC_BIND_DIR			:= /src
+# DOCKER_BUILD_CMD 		:= docker build
+# DOCKER_SHELL_CMD		:= docker run --rm -it --entrypoint /bin/sh
+# DOCKER_RUN_CMD 			:= docker run --rm
+# DOCKER_COMPOSE_CMD		:= docker-compose -f $(shell pwd)/docker/docker-compose.yml
+# SRC_BIND_DIR			:= /src
 
 # Workspace Path
 
@@ -61,7 +61,8 @@ SRC_BIND_DIR			:= /src
 
 .PHONY: info
 info:
-	@echo "Project: $(PROJECT_NAME)"
+	echo "Hello world"
+#@echo "Project: $(PROJECT_NAME)"
 # @echo "Maintainers: $(PROJECT_MAINTAINERS)"
 # @echo "Project Path: $(HOST_PROJECT_PATH)"
 # @echo "Trivy Scanner Version: $(TRIVY_VERSION)"
