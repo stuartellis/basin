@@ -12,7 +12,8 @@ publish:
     - docker:20.10.17-dind
   before_script:
     - yum update -q -y
-    - yum install -q -y awscli-2-2.7.8-1.amzn2022.0.3 docker-20.10.17-1.amzn2022.0.1 jq-1.6-10.amzn2022.x86_64 make-4.3-5.amzn2022
+    - yum install -q -y make
+    # - yum install -q -y awscli-2-2.7.8-1.amzn2022.0.3 docker-20.10.17-1.amzn2022.0.1 jq-1.6-10.amzn2022.x86_64 make-4.3-5.amzn2022
   script:
     - make --version
     - make info
