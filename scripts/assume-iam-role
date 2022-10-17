@@ -3,13 +3,16 @@
 # Assume IAM Role
 #
 # Usage: assume-iam-role <IAM role ARN> <session-prefix>
+#
+# Dependencies: Requires the AWS CLI and jq
+#
 
 # Add -x to enable debugging output
 set -eu -o pipefail
 
 ROLE_SESSION_ID=$(</dev/urandom head -c 16 | base64 | tr -dc '0-9a-zA-Z')
 AWS_SESSION_NAME=$2-$ROLE_SESSION_ID
-AWS_CREDS_FILE=/tmp/$AWS_SESSION_NAME.json
+AWS_CREDS_FILE=/dev/shm/$AWS_SESSION_NAME.json
 AWS_SESSION_DURATION=900 # 900 seconds is the minimum value allowed
 
 aws sts assume-role \
