@@ -12,8 +12,7 @@ publish:
     - docker:20.10.17-dind
   before_script:
     - yum update -q -y
-    - yum install -y make
-    # - yum install -q -y awscli docker jq
+    - yum install -q -y make awscli docker jq
   script:
     - make info
     - make basin-build TARGET_CPU_ARCH=$TARGET_CPU_ARCH
