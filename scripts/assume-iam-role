@@ -30,7 +30,7 @@ if [[ ! -v AWS_ACCESS_KEY_ID ]]; then
 elif [[ -z "$AWS_ACCESS_KEY_ID" ]]; then
     :
 else
-    echo "WARN: Replacing AWS_ACCESS_KEY_ID $AWS_ACCESS_KEY_ID with new key for assumed role"
+    echo "WARN: Replacing AWS_ACCESS_KEY_ID with new key for assumed role"
     unset AWS_ACCESS_KEY_ID
 fi
 
