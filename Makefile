@@ -15,6 +15,7 @@ PROJECT_NAME			?= basin
 PROJECT_MAINTAINERS		?= stuart@stuartellis.name
 ENVIRONMENT				?= dev
 DOCKER_REGISTRY			?= 333594256635.dkr.ecr.eu-west-2.amazonaws.com
+AWS_ECR_ROLE			?= arn:aws:iam::333594256635:role/SjeEcrPublish
 
 TARGET_CPU_ARCH			?= $(shell uname -m)
 TARGET_PLATFORM			?= linux/$(TARGET_CPU_ARCH)

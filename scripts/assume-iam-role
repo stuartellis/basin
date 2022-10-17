@@ -2,7 +2,7 @@
 
 # Assume IAM Role
 #
-# Usage: assume-iam-role <IAM role ARN> <session-prefix>
+# Usage: source assume-iam-role <IAM role ARN> <session-prefix>
 #
 # Dependencies: Requires the AWS CLI and jq
 #

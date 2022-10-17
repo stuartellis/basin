@@ -31,7 +31,8 @@
 			"extensions": [
 				"ms-vscode.makefile-tools",
 				"EditorConfig.EditorConfig",
-				"HashiCorp.terraform"
+				"HashiCorp.terraform",
+				"timonwong.shellcheck"
 			]
 		}
 	}

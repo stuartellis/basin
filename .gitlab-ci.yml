@@ -6,7 +6,7 @@ variables:
 
 publish:
   image: 
-    name: amazonlinux:2.0.20220912.1
+    name: amazonlinux:2022.0.20220928.0
     entrypoint: [""]
   services:
     - docker:20.10.17-dind
