@@ -4,7 +4,7 @@
 #
 # Usage: source assume-iam-role <IAM role ARN> <session-prefix>
 #
-# Dependencies: Requires the AWS CLI
+# Dependencies: The script requires the AWS CLI
 #
 
 # Add -x to enable debugging output
@@ -12,7 +12,6 @@ set -eu -o pipefail
 
 ROLE_SESSION_ID=$(</dev/urandom head -c 16 | base64 | tr -dc '0-9a-zA-Z')
 AWS_SESSION_NAME=$2-$ROLE_SESSION_ID
-# AWS_CREDS_FILE=/dev/shm/$AWS_SESSION_NAME.json
 AWS_SESSION_DURATION=900 # 900 seconds is the minimum value allowed
 
 AWS_CREDS=( $(
@@ -23,12 +22,6 @@ AWS_CREDS=( $(
     --query 'Credentials.[AccessKeyId,SecretAccessKey,SessionToken]' \
     --output text
 ) )
-
-# aws sts assume-role \
-#     --role-arn "$1" \
-#     --role-session-name "$AWS_SESSION_NAME" \
-#     --duration-seconds $AWS_SESSION_DURATION \
-#     --output json >"$AWS_CREDS_FILE"
 
 echo "INFO: Requested session $AWS_SESSION_NAME for IAM role $1"
 
