@@ -4,18 +4,21 @@ set -euo pipefail
 
 TIMESTAMP=$(date -u +"%Y%m%dT%H%M%SZ")
 AWS_CREDS_FILE=/tmp/$2-$TIMESTAMP.json
+AWS_SESSION_NAME=$2-$TIMESTAMP
 AWS_SESSION_DURATION=900 # 900 seconds is the minimum value allowed
 
 aws sts assume-role \
     --role-arn $1 \
-    --role-session-name $2-session \
+    --role-session-name $AWS_SESSION_NAME \
     --duration-seconds $AWS_SESSION_DURATION \
     --output json >$AWS_CREDS_FILE
+
+echo "INFO: Requested session $AWS_SESSION_NAME for IAM role $1"
 
 if [[ ! -v AWS_ACCESS_KEY_ID ]]; then
     echo "AWS_ACCESS_KEY_ID is not set"
 elif [[ -z "$AWS_ACCESS_KEY_ID" ]]; then
-    echo "AWS_ACCESS_KEY_ID is set as an empty string"
+    echo "WARN: AWS_ACCESS_KEY_ID is currently set as an empty string"
 else
     echo "AWS_ACCESS_KEY_ID has the existing value: $AWS_ACCESS_KEY_ID"
     unset AWS_ACCESS_KEY_ID
@@ -24,7 +27,7 @@ fi
 export AWS_ACCESS_KEY_ID=$(jq -r '.Credentials.AccessKeyId' $AWS_CREDS_FILE)
 
 if [[ ! -v AWS_SECRET_ACCESS_KEY ]]; then
-    echo "AWS_SECRET_ACCESS_KEY is not set"
+    echo "WARN: AWS_SECRET_ACCESS_KEY is not set"
 elif [[ -z "$AWS_SECRET_ACCESS_KEY" ]]; then
     echo "AWS_SECRET_ACCESS_KEY is set as an empty string"
 else
@@ -46,3 +49,5 @@ fi
 export AWS_SESSION_TOKEN=$(jq -r '.Credentials.SessionToken' $AWS_CREDS_FILE)
 
 rm -f $AWS_CREDS_FILE
+
+echo "INFO: Assumed IAM role $1 with session $AWS_SESSION_NAME"
