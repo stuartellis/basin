@@ -15,10 +15,8 @@ publish:
     - yum install -y make
     # - yum install -q -y awscli docker jq
   script:
-    - echo "Hello"
-    - make --version
-    # - make info
-    # - aws sts get-caller-identity # FIXME: Remove when no longer needed
-    # - aws sts get-caller-identity # FIXME: Remove when no longer needed
-    # - make basin-build TARGET_CPU_ARCH=$TARGET_CPU_ARCH
-    # - make basin-push
+    - make info
+    - make basin-build TARGET_CPU_ARCH=$TARGET_CPU_ARCH
+    - aws sts get-caller-identity # FIXME: Remove when no longer needed
+    - make basin-push
+    - aws sts get-caller-identity # FIXME: Remove when no longer needed
