@@ -5,37 +5,87 @@
 # Specifies that this is the top-level EditorConfig
 root = true
 
-# Defaults for any type of file
+# Defaults for every type of file
 [*]
+charset = utf-8
 end_of_line = lf
 insert_final_newline = true
-trim_trailing_whitespace = false
+trim_trailing_whitespace = true
 
-# Set default charset
-[*.{js,md,mk,py,tf,tfvars}]
-charset = utf-8
-
-[*.{js}]
-indent_size = 2
+[{Dockerfile, *.dockerfile}]
 indent_style = space
-max_line_length = 80
-
-[*.md]
-max_line_length = 0
-
-[*.py]
 indent_size = 4
-indent_style = space
-max_line_length = 88 # Black format defaults to 88
+max_line_length = 88
 
-[*.{tf,tfvars}]
-indent_size = 2
+# Go requires tab indentation
+[{go.mod,go.sum,*.go}]]
+indent_style = tab
+indent_size = 4
+max_line_length = 88
+
+[*.java]
 indent_style = space
-max_line_length = 80
+indent_size = 4
+max_line_length = 88
+
+[*.js]
+indent_style = space
+indent_size = 2
+max_line_length = 88
+
+[*.json]
+indent_style = space
+indent_size = 4
+max_line_length = 88
 
 # Makefiles require tab indentation
-[Makefile]
+[{Makefile, *.mk}]
 indent_style = tab
+indent_size = 4
 
-[*.mk]
+[*.md]
+indent_style = space
+indent_size = 4
+max_line_length = 0
+trim_trailing_whitespace = false
+
+# Python with Black format
+[*.{py,rst}]
+indent_style = space
+indent_size = 4
+max_line_length = 88
+
+[*.sh]
+indent_style = space
+indent_size = 2
+max_line_length = 88
+
+[*.sql]
+indent_style = space
+indent_size = 4
+max_line_length = 88
+
+[*.{tf,tfvars}]
+indent_style = space
+indent_size = 2
+max_line_length = 88
+
+[*.toml]
+indent_style = space
+indent_size = 2
+max_line_length = 88
+ 
+[*.ts]
+indent_style = space
+indent_size = 4
+max_line_length = 88
+
+[*.tsv]
 indent_style = tab
+indent_size = 2
+max_line_length = 0
+
+[*.{yml,yaml}]
+indent_style = space
+indent_size = 2
+max_line_length = 88
