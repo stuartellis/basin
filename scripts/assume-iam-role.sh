@@ -4,7 +4,7 @@
 #
 # Usage: source ./scripts/assume-iam-role.sh <IAM role ARN> <session-prefix>
 #
-# Dependencies: The script requires the AWS CLI
+# Dependencies: The script requires Bash 4 or above and the AWS CLI
 #
 
 # Add -x to enable debugging output
