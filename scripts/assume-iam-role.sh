@@ -14,14 +14,15 @@ ROLE_SESSION_ID=$(</dev/urandom head -c 16 | base64 | tr -dc '0-9a-zA-Z')
 AWS_SESSION_NAME=$2-$ROLE_SESSION_ID
 AWS_SESSION_DURATION=900 # 900 seconds is the minimum value allowed
 
-AWS_CREDS=( $(
-    aws sts assume-role \
+CREDS_QUERY_RESULT=$(aws sts assume-role \
     --role-arn "$1" \
     --role-session-name "$AWS_SESSION_NAME" \
     --duration-seconds $AWS_SESSION_DURATION \
     --query 'Credentials.[AccessKeyId,SecretAccessKey,SessionToken]' \
     --output text
-) )
+)
+
+IFS=$'\t' read -ra AWS_CREDS <<< "${CREDS_QUERY_RESULT}"
 
 echo "INFO: Requested session $AWS_SESSION_NAME for IAM role $1"
 
