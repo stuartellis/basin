@@ -65,7 +65,6 @@ info:
 	@echo "Project: $(PROJECT_NAME)"
 	@echo "Maintainers: $(PROJECT_MAINTAINERS)"
 	@echo "Project Path: $(HOST_PROJECT_PATH)"
-	@echo "Trivy Scanner Version: $(TRIVY_VERSION)"
 	@echo "Target Terraform Version: $(TERRAFORM_VERSION)"
 	@echo "Target Environment: $(ENVIRONMENT)"
 	@echo "Target CPU Architecture: $(TARGET_CPU_ARCH)"
@@ -76,5 +75,4 @@ info:
 
 include make/tools/terraform-tools-container.mk
 include make/tools/terraform-cli.mk
-include make/tools/trivy-cli.mk
 include make/apps/basin.mk
