@@ -25,6 +25,20 @@ stages:
   - terraform-plan
   - terraform-apply
 
+####
+
+.env_dev: &env_dev
+  image: docker
+  variables:
+    ENVIRONMENT: dev
+
+.env_test: &env_test
+  image: docker
+  variables:
+    ENVIRONMENT: test
+
+####
+
 .terraform: &terraform
   image: docker
   before_script:
@@ -48,6 +62,8 @@ stages:
   script:
     - echo "tf-apply!"
 
+####
+
 check-format:
   <<: *terraform
   stage: terraform-check
@@ -55,13 +71,17 @@ check-format:
     - echo "check-format!"
 
 plan-dev:
+  <<: *env_dev
   <<: *tf-plan
 
 plan-test:
+  <<: *env_test
   <<: *tf-plan
 
 apply-dev:
+  <<: *env_dev
   <<: *tf-apply
 
 apply-test:
+  <<: *env_test
   <<: *tf-apply
