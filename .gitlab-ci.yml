@@ -44,25 +44,17 @@ stages:
   before_script:
     - apk add make
 
-.tf-plan: &tf-plan
+.tf_plan: &tf_plan
   <<: *terraform
   stage: terraform-plan
   script:
-    - echo "tf-plan!"
+    - echo "tf_plan for $ENVIRONMENT!"
 
-.tf-plan: &tf-plan
-  <<: *terraform
-  stage: terraform-plan
-  script:
-    - echo "tf-plan!"
-
-.tf-apply: &tf-apply
+.tf_apply: &tf_apply
   <<: *terraform
   stage: terraform-apply
   script:
-    - echo "tf-apply!"
-
-####
+    - echo "tf_apply for $ENVIRONMENT!"
 
 check-format:
   <<: *terraform
@@ -70,18 +62,20 @@ check-format:
   script:
     - echo "check-format!"
 
+####
+
 plan-dev:
   <<: *env_dev
-  <<: *tf-plan
+  <<: *tf_plan
 
 plan-test:
   <<: *env_test
-  <<: *tf-plan
+  <<: *tf_plan
 
 apply-dev:
   <<: *env_dev
-  <<: *tf-apply
+  <<: *tf_apply
 
 apply-test:
   <<: *env_test
-  <<: *tf-apply
+  <<: *tf_apply
