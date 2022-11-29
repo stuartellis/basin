@@ -11,7 +11,7 @@
 
 ###### Versions ######
 
-ST_STACKTOOLS_VERSION	:= 0.4.6
+ST_STACKTOOLS_VERSION	:= 0.4.7
 ST_STACKS_SPEC_VERSION	:= 0.4.0
 ST_STACKS_SPEC_URL		:= https://github.com/stuartellis/multiform/tree/main/docs/terraform-stacks-spec/$(ST_STACKS_SPEC_VERSION)/README.md
 
@@ -90,11 +90,15 @@ else
 	ST_TF_SHELL_CMD := TF_WORKSPACE=$(ST_WORKSPACE) /bin/sh
 endif
 
-###### Targets ######
+###### Stack Targets ######
 
 .PHONY: stack-apply
 stack-apply: stack-plan
 	@$(ST_TF_RUN_CMD) $(ST_TF_WORKING_DIR) apply -auto-approve $(ST_TF_VARS) $(ST_TF_VAR_FILES)
+
+.PHONY: stack-check-fmt
+stack-check-fmt:
+	@$(ST_TF_RUN_CMD) $(ST_TF_WORKING_DIR) fmt -check -diff -recursive
 
 .PHONY: stack-console
 stack-console:
@@ -110,10 +114,6 @@ stack-fmt:
 
 .PHONY: stack-info
 stack-info:
-	@echo "Stack Tools Version: $(ST_STACKTOOLS_VERSION)"
-	@echo "Stacks Specification Version: $(ST_STACKS_SPEC_VERSION)"
-	@echo "Stacks Specification URL: $(ST_STACKS_SPEC_URL)"
-	@echo "Stacks Directory: $(ST_STACKS_DIR)"
 	@echo "Stack Name: $(STACK_NAME)"
 	@echo "Stack Variant Identifier: $(ST_VARIANT_ID)"
 	@echo "Stack Environment: $(ENVIRONMENT)"
@@ -134,3 +134,12 @@ stack-shell:
 .PHONY: stack-validate
 stack-validate:
 	@$(ST_TF_RUN_CMD) $(ST_TF_WORKING_DIR) validate
+
+###### Stack Tools Targets ######
+
+.PHONY: stacktools-info
+stacktools-info:
+	@echo "Stack Tools Version: $(ST_STACKTOOLS_VERSION)"
+	@echo "Stacks Specification Version: $(ST_STACKS_SPEC_VERSION)"
+	@echo "Stacks Specification URL: $(ST_STACKS_SPEC_URL)"
+	@echo "Stacks Directory: $(ST_STACKS_DIR)"
