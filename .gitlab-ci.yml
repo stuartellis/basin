@@ -7,4 +7,4 @@ default:
 check-job1:
   stage: check
   script:
-    - version
+    - terraform version
