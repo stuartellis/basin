@@ -21,8 +21,8 @@ STACK_RUNNER_IMAGE		?= stacktools-runner:developer
 
 ###### Options ######
 
-ST_ENABLE_BACKEND	:= true
-ST_RUN_CONTAINER	:= true
+ST_ENABLE_BACKEND	?= true
+ST_RUN_CONTAINER	?= true
 
 ###### Paths ######
 
