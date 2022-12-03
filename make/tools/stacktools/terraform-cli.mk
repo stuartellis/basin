@@ -1,4 +1,4 @@
-# Terraform Stack Tools - Commands
+# Stack Tools - Terraform Commands
 #
 # Makefile targets and variables
 #
@@ -11,7 +11,7 @@
 
 ###### Versions ######
 
-ST_STACKTOOLS_VERSION	:= 0.4.7
+ST_STACKTOOLS_VERSION	:= 0.4.11
 ST_STACKS_SPEC_VERSION	:= 0.4.0
 ST_STACKS_SPEC_URL		:= https://github.com/stuartellis/multiform/tree/main/docs/terraform-stacks-spec/$(ST_STACKS_SPEC_VERSION)/README.md
 
@@ -26,10 +26,12 @@ ST_RUN_CONTAINER	:= true
 
 ###### Paths ######
 
+ST_HOST_DEFS_DIR		:= $(PROJECT_DIR)/terraform1/stacks/definitions
+ST_HOST_ENVS_DIR		:= $(PROJECT_DIR)/terraform1/stacks/environments
+ST_HOST_MODULES_DIR		:= $(PROJECT_DIR)/terraform1/stacks/modules
+ST_HOST_TMP_DIR			:= $(PROJECT_DIR)/terraform1/stacks/tmp
+ST_BACKEND_FILE			:= $(ST_HOST_ENVS_DIR)/$(ENVIRONMENT)/backend.json
 ST_CONTAINER_BIND_DIR	:= /src
-ST_DEFS_DIR				:= $(PROJECT_DIR)/terraform1/stacks/definitions
-ST_ENVS_DIR				:= $(PROJECT_DIR)/terraform1/stacks/environments
-ST_BACKEND_FILE			:= $(ST_ENVS_DIR)/$(ENVIRONMENT)/backend.json
 
 ifeq ($(ST_RUN_CONTAINER), true)
 	ST_TF_BASE_DIR		:= $(ST_CONTAINER_BIND_DIR)/terraform1/stacks
@@ -46,14 +48,29 @@ ifeq ($(MAKECMDGOALS), stack-init)
 		ST_AWS_BACKEND_BUCKET		:= $(shell echo '$(ST_BACKEND_AWS)' | jq '.bucket')
 		ST_AWS_BACKEND_DDB_TABLE	:= $(shell echo '$(ST_BACKEND_AWS)' | jq '.dynamodb_table')
 		ST_AWS_BACKEND_KEY			:= "stacks/$(ENVIRONMENT)/$(STACK_NAME)"
-		ST_TF_BACKEND				:= -backend-config=region=$(ST_AWS_BACKEND_REGION) -backend-config=bucket=$(ST_AWS_BACKEND_BUCKET) -backend-config=key=$(ST_AWS_BACKEND_KEY) -backend-config=dynamodb_table=$(ST_AWS_BACKEND_DDB_TABLE)
+		ST_TF_BACKEND_OPT			:= -backend-config=region=$(ST_AWS_BACKEND_REGION) -backend-config=bucket=$(ST_AWS_BACKEND_BUCKET) -backend-config=key=$(ST_AWS_BACKEND_KEY) -backend-config=dynamodb_table=$(ST_AWS_BACKEND_DDB_TABLE)
 	else
-		ST_TF_BACKEND				:=
+		ST_TF_BACKEND_OPT			:=
 	endif
 endif
 
-ST_TF_CHDIR_OPT		:= -chdir=$(ST_TF_BASE_DIR)/definitions/$(STACK_NAME)
-ST_TF_VAR_FILES_OPT	:= -var-file=$(ST_TF_BASE_DIR)/environments/all/$(STACK_NAME).tfvars -var-file=$(ST_TF_BASE_DIR)/environments/$(ENVIRONMENT)/$(STACK_NAME).tfvars
+ifdef STACK_VARIANT
+	ifeq ($(MAKECMDGOALS), stack-forget)
+		ST_WORKSPACE	:= default
+	else
+		ST_WORKSPACE	:= $(STACK_VARIANT)
+	endif
+	ST_VARIANT_ID	:= $(STACK_VARIANT)
+	ST_TF_VARS_OPT	:= -var="stack_name=$(STACK_NAME)" -var="environment=$(ENVIRONMENT)" -var="variant=$(ST_VARIANT_ID)"
+else
+	ifeq ($(MAKECMDGOALS), stack-forget)
+		ST_VARIANT_ID 	:= default
+	else
+		ST_VARIANT_ID 	:=
+	endif
+	ST_WORKSPACE	:= default
+	ST_TF_VARS_OPT	:= -var="stack_name=$(STACK_NAME)" -var="environment=$(ENVIRONMENT)"
+endif
 
 ifdef AWS_ACCESS_KEY_ID
 	ST_DOCKER_ENV_VARS := -e TF_WORKSPACE=$(ST_WORKSPACE) -e AWS_REGION=$(AWS_REGION) -e AWS_ACCESS_KEY_ID=$(AWS_ACCESS_KEY_ID) -e AWS_SECRET_ACCESS_KEY=$(AWS_SECRET_ACCESS_KEY)
@@ -61,15 +78,13 @@ else
 	ST_DOCKER_ENV_VARS := -e TF_WORKSPACE=$(ST_WORKSPACE)
 endif
 
-ifdef STACK_VARIANT
-	ST_WORKSPACE	:= $(STACK_VARIANT)
-	ST_VARIANT_ID	:= $(STACK_VARIANT)
-	ST_TF_VARS_OPT	:= -var="stack_name=$(STACK_NAME)" -var="environment=$(ENVIRONMENT)" -var="variant=$(ST_VARIANT_ID)"
-else
-	ST_WORKSPACE	:= default
-	ST_VARIANT_ID 	:=
-	ST_TF_VARS_OPT	:= -var="stack_name=$(STACK_NAME)" -var="environment=$(ENVIRONMENT)"
-endif
+ST_TF_STACK_DIR		:= $(ST_TF_BASE_DIR)/definitions/$(STACK_NAME)
+ST_TF_TMP_DIR		:= $(ST_TF_BASE_DIR)/tmp
+ST_TF_PLAN_FILE		:= $(STACK_NAME)-$(ENVIRONMENT)-$(ST_WORKSPACE).tfplan
+ST_TF_OUTPUT_PATH	:= $(ST_TF_TMP_DIR)/$(ST_TF_PLAN_FILE)
+ST_TF_CHDIR_OPT		:= -chdir=$(ST_TF_BASE_DIR)/definitions/$(STACK_NAME)
+ST_TF_PLAN_FILE_OPT	:= -out=$(ST_TF_OUTPUT_PATH)
+ST_TF_VAR_FILES_OPT	:= -var-file=$(ST_TF_BASE_DIR)/environments/all/$(STACK_NAME).tfvars -var-file=$(ST_TF_BASE_DIR)/environments/$(ENVIRONMENT)/$(STACK_NAME).tfvars
 
 ###### Terraform Command ######
 
@@ -102,17 +117,32 @@ stacktools-info:
 
 .PHONY: stacks-environments
 stacks-environments:
-	@ls $(ST_ENVS_DIR) | sed s/all// | grep '\S'
+	@ls -d $(ST_HOST_ENVS_DIR)/*/ | xargs -n 1 basename | sed s/all// | grep '\S'
 
 .PHONY: stacks-list
 stacks-list:
-	@ls $(ST_DEFS_DIR)
+	@ls -d $(ST_HOST_DEFS_DIR)/*/ | xargs -n 1 basename
+
+.PHONY: stacks-new-tree
+stacks-new-tree:
+	@mkdir -p $(ST_HOST_DEFS_DIR)
+	@echo "# Terraform Stacks" > $(ST_HOST_DEFS_DIR)/README.md
+	@mkdir -p $(ST_HOST_DEFS_DIR)/template
+	@echo "# Terraform Stack" > $(ST_HOST_DEFS_DIR)/template/README.md
+	@mkdir -p $(ST_HOST_ENVS_DIR)
+	@echo "# Terraform Environments" > $(ST_HOST_ENVS_DIR)/README.md
+	@mkdir -p $(ST_HOST_ENVS_DIR)/all
+	@echo "# Terraform Variables Active for All Environments" > $(ST_HOST_ENVS_DIR)/all/README.md
+	@mkdir -p $(ST_HOST_MODULES_DIR)
+	@echo "# Terraform Modules" > $(ST_HOST_MODULES_DIR)/README.md
+	@mkdir -p $(ST_HOST_TMP_DIR)
+	@echo "# Terraform Generated Files" > $(ST_HOST_TMP_DIR)/README.md
 
 ###### Stack Targets ######
 
 .PHONY: stack-apply
-stack-apply: stack-plan
-	@$(ST_TF_RUN_CMD) $(ST_TF_CHDIR_OPT) apply -auto-approve $(ST_TF_VARS_OPT) $(ST_TF_VAR_FILES_OPT)
+stack-apply:
+	@$(ST_TF_RUN_CMD) $(ST_TF_CHDIR_OPT) apply -auto-approve $(ST_TF_OUTPUT_PATH)
 
 .PHONY: stack-check-fmt
 stack-check-fmt:
@@ -123,12 +153,16 @@ stack-console:
 	@$(ST_TF_RUN_CMD) $(ST_TF_CHDIR_OPT) console $(ST_TF_VARS_OPT) $(ST_TF_VAR_FILES_OPT)
 
 .PHONY: stack-destroy
-stack-destroy: stack-plan
+stack-destroy:
 	@$(ST_TF_RUN_CMD) $(ST_TF_CHDIR_OPT) apply -destroy -auto-approve $(ST_TF_VARS_OPT) $(ST_TF_VAR_FILES_OPT)
 
 .PHONY: stack-fmt
 stack-fmt:
 	@$(ST_TF_RUN_CMD) $(ST_TF_CHDIR_OPT) fmt
+
+.PHONY: stack-forget
+stack-forget:
+	@$(ST_TF_RUN_CMD) $(ST_TF_CHDIR_OPT) workspace delete $(ST_VARIANT_ID)
 
 .PHONY: stack-info
 stack-info:
@@ -139,11 +173,26 @@ stack-info:
 
 .PHONY: stack-init
 stack-init:
-	$(ST_TF_RUN_CMD) $(ST_TF_CHDIR_OPT) init $(ST_TF_BACKEND)
+	@$(ST_TF_RUN_CMD) $(ST_TF_CHDIR_OPT) init $(ST_TF_BACKEND_OPT)
+
+.PHONY: stack-new
+stack-new:
+	@mkdir -p $(ST_HOST_DEFS_DIR)/$(STACK_NAME)
+	@ls -d $(ST_HOST_ENVS_DIR)/*/ | sed 's/$$/$(STACK_NAME).tfvars/' | xargs touch
+	@cp -r $(ST_HOST_DEFS_DIR)/template/* $(ST_HOST_DEFS_DIR)/$(STACK_NAME)
 
 .PHONY: stack-plan
-stack-plan: stack-validate
-	@$(ST_TF_RUN_CMD) $(ST_TF_CHDIR_OPT) plan $(ST_TF_VARS_OPT) $(ST_TF_VAR_FILES_OPT)
+stack-plan:
+	@$(ST_TF_RUN_CMD) $(ST_TF_CHDIR_OPT) plan $(ST_TF_PLAN_FILE_OPT) $(ST_TF_VARS_OPT) $(ST_TF_VAR_FILES_OPT)
+
+.PHONY: stack-plan-json
+stack-plan-json:
+	@$(ST_TF_RUN_CMD) $(ST_TF_CHDIR_OPT) show -json
+
+.PHONY: stack-rm
+stack-rm:
+	@ls -d $(ST_HOST_ENVS_DIR)/*/ | sed 's/$$/$(STACK_NAME).tfvars/' | xargs rm
+	@rm -r $(ST_HOST_DEFS_DIR)/$(STACK_NAME)
 
 .PHONY: stack-shell
 stack-shell:

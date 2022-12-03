@@ -1,4 +1,4 @@
-# Terraform Stack Tools - Runner Container
+# Stack Tools - Runner Container
 #
 # Makefile targets and variables
 #
@@ -34,15 +34,15 @@ ST_RUNNER_DOCKER_BUILD_CMD	:= docker build
 
 ###### Targets ######
 
-.PHONY stackrunner-build:
-stackrunner-build:
+.PHONY stacktoolsrunner-build:
+stacktoolsrunner-build:
 	@$(ST_RUNNER_DOCKER_BUILD_CMD) $(ST_RUNNER_SOURCE_HOST_DIR) --platform $(ST_RUNNER_TARGET_PLATFORM) -f $(ST_RUNNER_DOCKER_FILE) -t $(ST_RUNNER_IMAGE_TAG) \
 	--build-arg DOCKER_IMAGE_BASE=$(ST_RUNNER_IMAGE_BASE) \
 	--build-arg TERRAFORM_VERSION=$(ST_RUNNER_TERRAFORM_VERSION) \
 	--label org.opencontainers.image.version=$(ST_RUNNER_VERSION)
 
-.PHONY stackrunner-info:
-stackrunner-info:
+.PHONY stacktoolsrunner-info:
+stacktoolsrunner-info:
 	@echo "App Name: $(ST_RUNNER_APP_NAME)"
 	@echo "App Version: $(ST_RUNNER_VERSION)"
 	@echo "Docker File: $(ST_RUNNER_DOCKER_FILE)"
