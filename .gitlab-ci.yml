@@ -2,9 +2,9 @@ stages:
   - check
 
 default:
-  image: hashicorp/terraform:1.3.5
+  image: alpine:3.17.0
 
 check-job1:
   stage: check
   script:
-    - terraform version
+    - echo "Hello world!"
