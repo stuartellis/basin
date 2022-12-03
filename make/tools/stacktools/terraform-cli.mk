@@ -121,7 +121,7 @@ stacks-environments:
 
 .PHONY: stacks-list
 stacks-list:
-	@ls -d $(ST_HOST_DEFS_DIR)/*/ | xargs -n 1 basename
+	@ls -d $(ST_HOST_DEFS_DIR)/*/ | xargs -n 1 basename | sed s/template// | grep '\S'
 
 .PHONY: stacks-new-tree
 stacks-new-tree:
