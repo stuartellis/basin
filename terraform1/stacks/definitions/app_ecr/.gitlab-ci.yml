@@ -1,0 +1,25 @@
+stages:
+  - check
+  - build
+  - test
+  - deploy
+
+image: alpine:3.17.0
+
+build_a:
+  stage: build
+  script:
+    - echo "This job builds ECR."
+
+test_a:
+  stage: test
+  needs: [build_a]
+  script:
+    - echo "This job tests ECR."
+
+deploy_a:
+  stage: deploy
+  needs: [test_a]
+  script:
+    - echo "This job deploys ECR."
+  environment: dev
