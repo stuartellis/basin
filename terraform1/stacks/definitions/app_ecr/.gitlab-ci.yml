@@ -2,7 +2,6 @@ stages:
   - check
   - build
   - test
-  - deploy
 
 image: alpine:3.17.0
 

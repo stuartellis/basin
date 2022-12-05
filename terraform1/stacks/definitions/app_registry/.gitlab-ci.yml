@@ -2,7 +2,6 @@ stages:
   - check
   - build
   - test
-  - deploy
 
 image: alpine:3.17.0
 
@@ -16,10 +15,3 @@ test_a:
   needs: [build_a]
   script:
     - echo "This job tests Registry."
-
-deploy_a:
-  stage: deploy
-  needs: [test_a]
-  script:
-    - echo "This job deploys Registry."
-  environment: dev

@@ -1,8 +1,8 @@
 stages:
-  - triggers
+  - test_stacks
 
 trigger_app_registry:
-  stage: triggers
+  stage: test_stacks
   trigger:
     include: terraform1/stacks/definitions/app_registry/.gitlab-ci.yml
   rules:
@@ -10,7 +10,7 @@ trigger_app_registry:
         - terraform1/stacks/definitions/app_registry/*
 
 trigger_b_app_ecr:
-  stage: triggers
+  stage: test_stacks
   trigger:
     include: terraform1/stacks/definitions/app_ecr/.gitlab-ci.yml
   rules:
