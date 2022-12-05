@@ -15,10 +15,3 @@ test_a:
   needs: [build_a]
   script:
     - echo "This job tests ECR."
-
-deploy_a:
-  stage: deploy
-  needs: [test_a]
-  script:
-    - echo "This job deploys ECR."
-  environment: dev

@@ -1,0 +1,16 @@
+stages:
+  - plan
+  - apply
+
+image: alpine:3.17.0
+
+plan_a:
+  stage: plan
+  script:
+    - echo "This job plans ECR."
+
+apply_a:
+  stage: apply
+  needs: [plan_a]
+  script:
+    - echo "This job applies ECR."
