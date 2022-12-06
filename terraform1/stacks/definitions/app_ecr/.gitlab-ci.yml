@@ -5,6 +5,11 @@ stages:
 
 image: alpine:3.17.0
 
+check_a:
+  stage: check
+  script:
+    - make stack-info STACK_NAME=app_ecr
+
 build_a:
   stage: build
   script:
