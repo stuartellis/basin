@@ -1,5 +1,5 @@
 variables:
-  STACK_NAME=app_registry
+  STACK_NAME: app_registry
 
 stages:
   - check_terraform
