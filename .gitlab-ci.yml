@@ -1,7 +1,8 @@
 stages:
   - test_stacks
-  # - deploy_registry
-  # - deploy_ecr
+
+# - deploy_registry
+# - deploy_ecr
 
 test_app_registry:
   stage: test_stacks
