@@ -1,23 +1,16 @@
 stages:
-  - check
-  - build
-  - test
+  - check_terraform
+  - validate_terraform
 
 image: alpine:3.17.0
 
 check_a:
-  stage: check
+  stage: check_terraform
   script:
-    - apk add make
+    - apk add jq make
     - make stack-info STACK_NAME=app_ecr
 
-build_a:
-  stage: build
+validate_a:
+  stage: validate_terraform
   script:
-    - echo "This job builds ECR."
-
-test_a:
-  stage: test
-  needs: [build_a]
-  script:
-    - echo "This job tests ECR."
+    - echo "This job validates ECR."

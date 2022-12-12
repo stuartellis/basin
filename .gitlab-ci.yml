@@ -1,7 +1,7 @@
 stages:
   - test_stacks
-  - deploy_registry
-  - deploy_ecr
+  # - deploy_registry
+  # - deploy_ecr
 
 test_app_registry:
   stage: test_stacks
@@ -11,26 +11,26 @@ test_app_registry:
     - changes:
         - terraform1/stacks/definitions/app_registry/*
 
-test_b_app_ecr:
-  stage: test_stacks
-  trigger:
-    include: terraform1/stacks/definitions/app_ecr/.gitlab-ci.yml
-  rules:
-    - changes:
-        - terraform1/stacks/definitions/app_ecr/*
+# test_b_app_ecr:
+#   stage: test_stacks
+#   trigger:
+#     include: terraform1/stacks/definitions/app_ecr/.gitlab-ci.yml
+#   rules:
+#     - changes:
+#         - terraform1/stacks/definitions/app_ecr/*
 
-deploy_app_registry:
-  stage: deploy_registry
-  trigger:
-    include: gitlab/deploy/app_registry.yml
-  rules:
-    # Runs only when a tag with 'X.Y.Z.REGISTRY.A' pattern is created
-    - if: '$CI_COMMIT_TAG =~ /^\d+\.\d+\.\d+\.REGISTRY\.\d+$/'
+# deploy_app_registry:
+#   stage: deploy_registry
+#   trigger:
+#     include: gitlab/deploy/app_registry.yml
+#   rules:
+#     # Runs only when a tag with 'X.Y.Z.REGISTRY.A' pattern is created
+#     - if: '$CI_COMMIT_TAG =~ /^\d+\.\d+\.\d+\.REGISTRY\.\d+$/'
 
-deploy_app_ecr:
-  stage: deploy_ecr
-  trigger:
-    include: gitlab/deploy/app_ecr.yml
-  rules:
-      # Runs only when a tag with 'X.Y.Z.ECR.A' pattern is created
-      - if: '$CI_COMMIT_TAG =~ /^\d+\.\d+\.\d+\.ECR\.\d+$/'
+# deploy_app_ecr:
+#   stage: deploy_ecr
+#   trigger:
+#     include: gitlab/deploy/app_ecr.yml
+#   rules:
+#       # Runs only when a tag with 'X.Y.Z.ECR.A' pattern is created
+#       - if: '$CI_COMMIT_TAG =~ /^\d+\.\d+\.\d+\.ECR\.\d+$/'

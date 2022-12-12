@@ -1,17 +1,19 @@
+variables:
+  STACK_NAME=app_registry
+
 stages:
-  - check
-  - build
-  - test
+  - check_terraform
+  - validate_terraform
 
 image: alpine:3.17.0
 
-build_a:
-  stage: build
+check_a:
+  stage: check_terraform
   script:
-    - echo "This job builds Registry."
+    - apk add jq make
+    - make stack-info STACK_NAME=$STACK_NAME
 
-test_a:
-  stage: test
-  needs: [build_a]
+validate_a:
+  stage: validate_terraform
   script:
-    - echo "This job tests Registry."
+    - echo "This job validates Registry."
