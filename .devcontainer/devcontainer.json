@@ -35,5 +35,9 @@
 				"timonwong.shellcheck"
 			]
 		}
-	}
+	},
+    "containerEnv": {
+        "DD_API_KEY": "${localEnv:DD_API_KEY}",
+        "DD_APP_KEY": "${localEnv:DD_APP_KEY}"
+    }
 }
