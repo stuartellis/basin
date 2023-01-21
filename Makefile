@@ -19,5 +19,3 @@ PROJECT_DIR				:= $(shell pwd)
 ENVIRONMENT				?= dev
 
 include make/tools/stacktools/*.mk
-
-###

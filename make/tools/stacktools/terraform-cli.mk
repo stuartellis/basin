@@ -2,8 +2,6 @@
 #
 # Makefile targets and variables
 #
-# Set ST_RUN_CONTAINER=true to run Terraform in a Docker container
-#
 # This provides the Terraform variables: stack_name, environment, variant
 #
 
@@ -11,6 +9,7 @@
 
 ST_ENABLE_BACKEND	?= true
 ST_RUN_CONTAINER	?= true
+STACK_NAME			?= NONE
 
 ###### Paths ######
 
@@ -89,7 +88,7 @@ ifeq ($(ST_RUN_CONTAINER), true)
  		--mount type=bind,source=$(PROJECT_DIR),destination=$(ST_CONTAINER_BIND_DIR) \
  		-w $(ST_CONTAINER_BIND_DIR) \
 		$(ST_DOCKER_ENV_VARS) \
- 		$(STACK_RUNNER_IMAGE)
+ 		$(STACK_TOOLS_RUNNER_IMAGE)
 
 	ST_TF_RUN_CMD := $(ST_DOCKER_RUN_CMD) $(ST_TF_DOCKER_OPTS) terraform
 	ST_TF_SHELL_CMD := $(ST_DOCKER_SHELL_CMD) $(ST_TF_DOCKER_OPTS)
