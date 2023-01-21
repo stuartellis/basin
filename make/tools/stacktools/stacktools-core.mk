@@ -2,15 +2,15 @@
 #
 # Makefile targets and variables
 #
-# Requirements: A UNIX shell, jq, GNU Make 3 or above
-#
 
 ###### Versions ######
 
-ST_STACKTOOLS_VERSION		:= 0.4.15
+ST_STACKTOOLS_VERSION		:= 0.4.16
 ST_STACKTOOLS_REPO_URL		:= git@gitlab.com:stuartellis-org/stacktools.git
 ST_STACKTOOLS_REPO_BRANCH	:= main
 ST_STACKTOOLS_PKG			:= stacktools-DELETE-ME.tar
+ST_STACKTOOLS_SRC_DIR		:= src
+ST_STACKTOOLS_TMP_DIR		:= .stacktools
 
 ST_STACKS_SPEC_VERSION		:= 0.4.0
 ST_STACKS_SPEC_URL			:= https://gitlab.com/stuartellis-org/stacktools/-/tree/main/docs/terraform-stacks-spec/$(ST_STACKS_SPEC_VERSION)/README.md
@@ -29,14 +29,23 @@ stacktools-info:
 
 .PHONY: stacktools-init
 stacktools-init:
-	@git archive --remote $(ST_STACKTOOLS_REPO_URL) --format tar --output $(ST_STACKTOOLS_PKG) $(ST_STACKTOOLS_REPO_BRANCH)
-	@tar -xzf $(ST_STACKTOOLS_PKG) docker/tools/stacktools make/tools/stacktools
-	@make stacks-new-tree ST_ENABLE_BACKEND=false
-	@rm $(ST_STACKTOOLS_PKG)
+	@mkdir -p $(ST_STACKTOOLS_TMP_DIR)
+	@git archive --remote $(ST_STACKTOOLS_REPO_URL) --format tar --output $(ST_STACKTOOLS_TMP_DIR)/$(ST_STACKTOOLS_PKG) $(ST_STACKTOOLS_REPO_BRANCH)
+	@tar -C .stacktools -xzf $(ST_STACKTOOLS_TMP_DIR)/$(ST_STACKTOOLS_PKG) $(ST_STACKTOOLS_SRC_DIR)/docker/tools/stacktools $(ST_STACKTOOLS_SRC_DIR)/make/tools/stacktools $(ST_STACKTOOLS_SRC_DIR)/terraform1
+	@mkdir -p $(PROJECT_DIR)/docker/tools $(PROJECT_DIR)/make/tools
+	@cp -R $(ST_STACKTOOLS_TMP_DIR)/$(ST_STACKTOOLS_SRC_DIR)/terraform1 $(PROJECT_DIR)
+	@cp -R $(ST_STACKTOOLS_TMP_DIR)/$(ST_STACKTOOLS_SRC_DIR)/docker/tools/stacktools $(PROJECT_DIR)/docker/tools
+	@cp -R $(ST_STACKTOOLS_TMP_DIR)/$(ST_STACKTOOLS_SRC_DIR)/make/tools/stacktools $(PROJECT_DIR)/make/tools
+	@rm -r $(ST_STACKTOOLS_TMP_DIR)
 	@make stacktools-info
 
 .PHONY: stacktools-update
 stacktools-update:
-	@git archive --remote $(ST_STACKTOOLS_REPO_URL) --format tar --output $(ST_STACKTOOLS_PKG) $(ST_STACKTOOLS_REPO_BRANCH)
-	@tar -xzf $(ST_STACKTOOLS_PKG) docker/tools/stacktools make/tools/stacktools
-	@rm $(ST_STACKTOOLS_PKG)
+	@mkdir -p $(ST_STACKTOOLS_TMP_DIR)
+	@git archive --remote $(ST_STACKTOOLS_REPO_URL) --format tar --output $(ST_STACKTOOLS_TMP_DIR)/$(ST_STACKTOOLS_PKG) $(ST_STACKTOOLS_REPO_BRANCH)
+	@tar -C .stacktools -xzf $(ST_STACKTOOLS_TMP_DIR)/$(ST_STACKTOOLS_PKG) $(ST_STACKTOOLS_SRC_DIR)/docker/tools/stacktools $(ST_STACKTOOLS_SRC_DIR)/make/tools/stacktools
+	@mkdir -p $(PROJECT_DIR)/docker/tools $(PROJECT_DIR)/make/tools
+	@cp -R $(ST_STACKTOOLS_TMP_DIR)/$(ST_STACKTOOLS_SRC_DIR)/docker/tools/stacktools $(PROJECT_DIR)/docker/tools
+	@cp -R $(ST_STACKTOOLS_TMP_DIR)/$(ST_STACKTOOLS_SRC_DIR)/make/tools/stacktools $(PROJECT_DIR)/make/tools
+	@rm -r $(ST_STACKTOOLS_TMP_DIR)
+	@make stacktools-info

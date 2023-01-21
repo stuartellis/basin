@@ -107,21 +107,6 @@ stacks-environments:
 stacks-list:
 	@ls -d $(ST_HOST_DEFS_DIR)/*/ | xargs -n 1 basename | sed s/template// | grep '\S'
 
-.PHONY: stacks-new-tree
-stacks-new-tree:
-	@mkdir -p $(ST_HOST_DEFS_DIR)
-	@echo "# Terraform Stacks" > $(ST_HOST_DEFS_DIR)/README.md
-	@mkdir -p $(ST_HOST_DEFS_DIR)/template
-	@echo "# Terraform Stack" > $(ST_HOST_DEFS_DIR)/template/README.md
-	@mkdir -p $(ST_HOST_ENVS_DIR)
-	@echo "# Terraform Environments" > $(ST_HOST_ENVS_DIR)/README.md
-	@mkdir -p $(ST_HOST_ENVS_DIR)/all
-	@echo "# Terraform Variables Active for All Environments" > $(ST_HOST_ENVS_DIR)/all/README.md
-	@mkdir -p $(ST_HOST_MODULES_DIR)
-	@echo "# Terraform Modules" > $(ST_HOST_MODULES_DIR)/README.md
-	@mkdir -p $(ST_HOST_TMP_DIR)
-	@echo "# Terraform Generated Files" > $(ST_HOST_TMP_DIR)/README.md
-
 ###### Stack Targets ######
 
 .PHONY: stack-apply
