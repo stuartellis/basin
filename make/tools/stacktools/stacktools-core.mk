@@ -29,7 +29,7 @@ stacktools-info:
 
 .PHONY: stacktools-init
 stacktools-init:
-	@git archive --remote $(ST_STACKTOOLS_REPO) --format tar --output $(ST_STACKTOOLS_PKG) $(ST_STACKTOOLS_REPO_BRANCH)
+	@git archive --remote $(ST_STACKTOOLS_REPO_URL) --format tar --output $(ST_STACKTOOLS_PKG) $(ST_STACKTOOLS_REPO_BRANCH)
 	@tar -xzf $(ST_STACKTOOLS_PKG) docker/tools/stacktools make/tools/stacktools
 	@make stacks-new-tree ST_ENABLE_BACKEND=false
 	@rm $(ST_STACKTOOLS_PKG)
