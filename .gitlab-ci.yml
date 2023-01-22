@@ -1,10 +1,19 @@
 stages:
   - test_stacks
+  - deploy_stacks
 
 test_infra_canary:
   stage: test_stacks
   trigger:
     include: terraform1/stacks/definitions/infra_canary/.gitlab-ci.yml
+  rules:
+    - changes:
+        - terraform1/stacks/definitions/infra_canary/*
+
+deploy_infra_canary:
+  stage: deploy_stacks
+  trigger:
+    include: .gitlab-ci/deployment/terraform/.gitlab-ci.yml
   rules:
     - changes:
         - terraform1/stacks/definitions/infra_canary/*
