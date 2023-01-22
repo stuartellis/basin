@@ -12,7 +12,7 @@ variables:
 stages:
   - plan_terraform
 
-.prepare_host:
+.prepare_tools_host:
   variables:
     ST_RUNNER_VERSION: ci
   before_script:
@@ -21,7 +21,7 @@ stages:
 
 plan_terraform:
   stage: plan_terraform
-  extends: .prepare_host
+  extends: .prepare_tools_host
   variables:
     ENVIRONMENT: dev
   script:
