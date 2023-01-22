@@ -1,0 +1,21 @@
+variables:
+  AWS_REGION: eu-west-2
+  AWS_ECR_ROLE: arn:aws:iam::333594256635:role/SjeEcrPublish
+  DOCKER_HOST: tcp://docker:2375
+  TARGET_CPU_ARCH: x86_64
+
+publish:
+  image: 
+    name: amazonlinux:2022.0.20220928.0
+    entrypoint: [""]
+  services:
+    - docker:20.10.17-dind
+  before_script:
+    - yum update -q -y
+    - yum install -q -y make awscli docker jq
+  script:
+    - make info
+    - make basin-build TARGET_CPU_ARCH=$TARGET_CPU_ARCH
+    - aws sts get-caller-identity # FIXME: Remove when no longer needed
+    - make basin-push
+    - aws sts get-caller-identity # FIXME: Remove when no longer needed

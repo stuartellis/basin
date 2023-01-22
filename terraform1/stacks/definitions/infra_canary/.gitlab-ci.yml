@@ -1,0 +1,28 @@
+services:
+  - name: docker:20.10.17-dind
+
+variables:
+  STACK_NAME: infra_canary
+
+stages:
+  - prepare_build_container
+  - check_terraform
+  - validate_terraform
+
+image: alpine:3.17.0
+
+prepare_stack_tools_container:
+  stage: prepare_build_container
+  script:
+    - apk add make
+    - make stackrunner-build
+
+check_a:
+  stage: check_terraform
+  script:
+    - echo "Checks"
+
+validate_a:
+  stage: validate_terraform
+  script:
+    - echo "Validates"
