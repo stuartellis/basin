@@ -5,6 +5,3 @@ thumbs.db
 # Editor files
 .idea
 .vscode
-
-# Generated files
-tmp
