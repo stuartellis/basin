@@ -1,7 +1,7 @@
 {
     "aws": {
-        "bucket": "FIXME-terraform",
-        "dynamodb_table": "terraform-state-lock_FIXME",
+        "bucket": "sje-333594256635-terraform",
+        "dynamodb_table": "terraform-state-lock_333594256635_dev",
         "region": "eu-west-2"
     }
 }
