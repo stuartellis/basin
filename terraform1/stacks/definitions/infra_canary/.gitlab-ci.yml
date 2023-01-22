@@ -13,5 +13,5 @@ check_terraform:
   script:
     - apk add make
     - make stackrunner-info
-    # - make stackrunner-build ST_RUNNER_VERSION=ci ST_RUNNER_TARGET_CPU_ARCH=amd64
+    - make stackrunner-build ST_RUNNER_VERSION=ci
     # - make stack-check-fmt ST_RUNNER_VERSION=ci STACK_NAME=$(STACK_NAME)
