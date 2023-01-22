@@ -26,6 +26,7 @@ plan_terraform:
   variables:
     ENVIRONMENT: dev
   artifacts:
+    when: on_success
     name: $STACK_NAME-tf-plan
     expire_in: 1 week
     paths:
@@ -33,13 +34,14 @@ plan_terraform:
   script:
     - make stack-init
     - make stack-plan
-    - make stack-plan-json
 
-# apply_terraform:
-#   stage: apply_terraform
-#   extends: .prepare_st_host
-#   variables:
-#     ENVIRONMENT: dev
-#   script:
-#     - make stack-init
-#     - make stack-apply
+apply_terraform:
+  stage: apply_terraform
+  extends: .prepare_st_host
+  dependencies:
+    - plan_terraform
+  variables:
+    ENVIRONMENT: dev
+  script:
+    - make stack-init
+    - make stack-apply
