@@ -12,13 +12,18 @@ variables:
   STACK_TOOLS_RUNNER_IMAGE: stacktools-runner:ci
 
 stages:
+  - build_tools_image
   - check_terraform
+
+build_tools_image:
+  stage: build_tools_image
+  script:
+    - apk add make
+    - make stackrunner-build
 
 check_terraform:
   stage: check_terraform
   script:
-    - apk add make
-    - make stackrunner-build
     - make stack-check-fmt
     - make stack-init
     - make stack-validate
