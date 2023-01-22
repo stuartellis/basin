@@ -34,8 +34,6 @@ stages:
 
 .apply_terraform:
   extends: .prepare_tools_host
-  dependencies:
-    - plan_terraform
   script:
     - make stack-init
     - make stack-apply
@@ -50,6 +48,8 @@ plan_terraform_dev:
 
 apply_terraform_dev:
   stage: apply_terraform
+  dependencies:
+    - plan_terraform_dev
   extends:
     - .prepare_tools_host
     - .apply_terraform
