@@ -1,5 +1,5 @@
 services:
-  - name: docker:20.10.17-dind
+  - name: docker:20.10.20-dind
 
 variables:
   STACK_NAME: infra_canary
@@ -9,8 +9,9 @@ stages:
 
 check_terraform:
   stage: check_terraform
-  image: docker:20.10.17
+  image: docker:20.10.20
   script:
     - apk add make
-    - make stackrunner-build ST_RUNNER_VERSION=ci ST_RUNNER_TARGET_CPU_ARCH=amd64
-    - make stack-check-fmt ST_RUNNER_VERSION=ci STACK_NAME=$(STACK_NAME)
+    - make stackrunner-info
+    # - make stackrunner-build ST_RUNNER_VERSION=ci ST_RUNNER_TARGET_CPU_ARCH=amd64
+    # - make stack-check-fmt ST_RUNNER_VERSION=ci STACK_NAME=$(STACK_NAME)

@@ -44,4 +44,6 @@ stackrunner-info:
 	@echo "App Name: $(ST_RUNNER_APP_NAME)"
 	@echo "App Version: $(ST_RUNNER_VERSION)"
 	@echo "Docker File: $(ST_RUNNER_DOCKER_FILE)"
-	@echo "Docker Image: $(ST_RUNNER_IMAGE_TAG)"
+	@echo "Docker Image Tag: $(ST_RUNNER_IMAGE_TAG)"
+	@echo "Docker CPU Architecture: $(ST_RUNNER_TARGET_CPU_ARCH)"
+	@echo "Docker Platform: $(ST_RUNNER_TARGET_PLATFORM)"
