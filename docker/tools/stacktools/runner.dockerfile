@@ -10,9 +10,9 @@ FROM ${DOCKER_IMAGE_BASE} as base
 
 RUN apk update && \
     apk upgrade && \
-    apk add git && \
-    apk add jq && \
-    apk add make
+    apk add --no-cache git && \
+    apk add --no-cache jq && \
+    apk add --no-cache make
 
 #========== BUILDER ==========
 
@@ -21,7 +21,7 @@ FROM base AS builder
 ARG TERRAFORM_VERSION
 ARG TARGETARCH
 
-RUN apk add curl
+RUN apk add --no-cache curl
 
 WORKDIR /usr/local/bin
 
