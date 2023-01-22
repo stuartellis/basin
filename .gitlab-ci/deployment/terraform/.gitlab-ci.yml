@@ -33,6 +33,7 @@ plan_terraform:
   script:
     - make stack-init
     - make stack-plan
+    - make stack-plan-json
 
 # apply_terraform:
 #   stage: apply_terraform
