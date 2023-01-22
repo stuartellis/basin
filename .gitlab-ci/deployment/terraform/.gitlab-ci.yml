@@ -13,18 +13,15 @@ stages:
   - plan_terraform
   - apply_terraform
 
-.prepare_st_host:
+.prepare_tools_host:
   variables:
     ST_RUNNER_VERSION: ci
   before_script:
     - apk add jq make
     - make stackrunner-build
 
-plan_terraform:
-  stage: plan_terraform
-  extends: .prepare_st_host
-  variables:
-    ENVIRONMENT: dev
+.plan_terraform:
+  extends: .prepare_tools_host
   artifacts:
     when: on_success
     name: $STACK_NAME-tf-plan
@@ -35,13 +32,26 @@ plan_terraform:
     - make stack-init
     - make stack-plan
 
-apply_terraform:
-  stage: apply_terraform
-  extends: .prepare_st_host
+.apply_terraform:
+  extends: .prepare_tools_host
   dependencies:
     - plan_terraform
-  variables:
-    ENVIRONMENT: dev
   script:
     - make stack-init
     - make stack-apply
+
+plan_terraform_dev:
+  stage: plan_terraform
+  extends:
+    - .prepare_tools_host
+    - .plan_terraform
+  variables:
+    ENVIRONMENT: dev
+
+apply_terraform_dev:
+  stage: apply_terraform
+  extends:
+    - .prepare_tools_host
+    - .apply_terraform
+  variables:
+    ENVIRONMENT: dev
