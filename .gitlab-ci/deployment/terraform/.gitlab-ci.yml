@@ -17,7 +17,7 @@ stages:
   variables:
     ST_RUNNER_VERSION: ci
   before_script:
-    - apk add --no-cache jq make
+    - apk add jq make
     - make stackrunner-build
 
 .plan_terraform:
