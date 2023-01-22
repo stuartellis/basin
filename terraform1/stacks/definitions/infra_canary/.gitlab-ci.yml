@@ -9,8 +9,6 @@ stages:
   - check_terraform
   - validate_terraform
 
-image: alpine:3.17.0
-
 prepare_stack_tools_container:
   stage: prepare_build_container
   script:
