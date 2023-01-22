@@ -20,7 +20,7 @@ stages:
     - make stackrunner-build
 
 plan_terraform:
-  stage: check_terraform
+  stage: plan_terraform
   extends: .build_tools_image
   variables:
     ENVIRONMENT: dev

@@ -16,4 +16,4 @@ deploy_infra_canary:
     include: .gitlab-ci/deployment/terraform/.gitlab-ci.yml
   rules:
     - changes:
-        - terraform1/stacks/definitions/infra_canary/*
+        - .gitlab-ci/deployment/terraform/.gitlab-ci.yml
