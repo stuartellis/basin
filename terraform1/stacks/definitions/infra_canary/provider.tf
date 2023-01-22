@@ -4,7 +4,7 @@ provider "aws" {
       Environment = var.environment
       Provisioner = "Terraform"
       Stack       = var.stack_name
-      Variant     = var.variant == "" ? "default" : var.variant
+      Variant     = local.variant
     }
   }
 }
