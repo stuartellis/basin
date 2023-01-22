@@ -11,6 +11,7 @@ variables:
 
 stages:
   - plan_terraform
+  - apply_terraform
 
 .prepare_st_host:
   variables:
@@ -24,6 +25,20 @@ plan_terraform:
   extends: .prepare_st_host
   variables:
     ENVIRONMENT: dev
+  artifacts:
+    name: $STACK_NAME-tf-plan
+    expire_in: 1 week
+    paths:
+      - terraform1/stacks/tmp/
   script:
     - make stack-init
     - make stack-plan
+
+# apply_terraform:
+#   stage: apply_terraform
+#   extends: .prepare_st_host
+#   variables:
+#     ENVIRONMENT: dev
+#   script:
+#     - make stack-init
+#     - make stack-apply
