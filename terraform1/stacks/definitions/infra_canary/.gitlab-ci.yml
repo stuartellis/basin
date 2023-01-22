@@ -5,22 +5,12 @@ variables:
   STACK_NAME: infra_canary
 
 stages:
-  - prepare_build_container
   - check_terraform
-  - validate_terraform
 
-prepare_stack_tools_container:
-  stage: prepare_build_container
+check_terraform:
+  stage: check_terraform
+  image: docker:20.10.17
   script:
     - apk add make
-    - make stackrunner-build
-
-check_a:
-  stage: check_terraform
-  script:
-    - echo "Checks"
-
-validate_a:
-  stage: validate_terraform
-  script:
-    - echo "Validates"
+    - make stackrunner-build ST_RUNNER_VERSION=ci
+    - make stack-check-fmt ST_RUNNER_VERSION=ci STACK_NAME=$(STACK_NAME)
