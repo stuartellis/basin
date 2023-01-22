@@ -7,7 +7,6 @@ variables:
   DOCKER_DRIVER: overlay2
   DOCKER_TLS_CERTDIR: "/certs"
   ST_ENABLE_BACKEND: "false"
-  ST_RUNNER_VERSION: ci
   STACK_NAME: infra_canary
   STACK_TOOLS_RUNNER_IMAGE: stacktools-runner:ci
 
@@ -15,7 +14,9 @@ stages:
   - check_terraform
 
 .build_tools_image:
-  script:
+  variables:
+    ST_RUNNER_VERSION: ci
+  before_script:
     - apk add make
     - make stackrunner-build
 
