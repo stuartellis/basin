@@ -14,4 +14,4 @@ check_terraform:
     - apk add make
     - make stackrunner-info
     - make stackrunner-build ST_RUNNER_VERSION=ci
-    - make stack-check-fmt ST_RUNNER_VERSION=ci STACK_NAME=$(STACK_NAME)
+    - make stack-check-fmt ST_RUNNER_VERSION=ci STACK_NAME=$STACK_NAME
