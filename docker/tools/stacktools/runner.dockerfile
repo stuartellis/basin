@@ -1,5 +1,7 @@
 ARG DOCKER_IMAGE_BASE=alpine:3.17.1
 ARG TERRAFORM_VERSION=1.3.7
+
+# FIXME
 ARG TARGETARCH=amd64
 
 #============ BASE ===========
