@@ -1,15 +1,12 @@
 terraform {
   required_version = "> 1.0.0"
 
-  # FIXME
-  # backend "s3" {
-  #   workspace_key_prefix = "workspaces"
-  # }
+  backend "s3" {}
 
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "= 4.41.0"
+      version = "= 4.51.0"
     }
   }
 }

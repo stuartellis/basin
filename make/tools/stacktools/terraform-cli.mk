@@ -35,9 +35,9 @@ ifeq ($(MAKECMDGOALS), stack-init)
 		ST_AWS_BACKEND_BUCKET		:= $(shell echo '$(ST_BACKEND_AWS)' | jq '.bucket')
 		ST_AWS_BACKEND_DDB_TABLE	:= $(shell echo '$(ST_BACKEND_AWS)' | jq '.dynamodb_table')
 		ST_AWS_BACKEND_KEY			:= "stacks/$(ENVIRONMENT)/$(STACK_NAME)"
-		ST_TF_BACKEND_OPT			:= -backend-config=region=$(ST_AWS_BACKEND_REGION) -backend-config=bucket=$(ST_AWS_BACKEND_BUCKET) -backend-config=key=$(ST_AWS_BACKEND_KEY) -backend-config=dynamodb_table=$(ST_AWS_BACKEND_DDB_TABLE)
+		ST_TF_BACKEND_OPT			:= -backend-config=workspace_key_prefix=workspaces -backend-config=region=$(ST_AWS_BACKEND_REGION) -backend-config=bucket=$(ST_AWS_BACKEND_BUCKET) -backend-config=key=$(ST_AWS_BACKEND_KEY) -backend-config=dynamodb_table=$(ST_AWS_BACKEND_DDB_TABLE)
 	else
-		ST_TF_BACKEND_OPT			:=
+		ST_TF_BACKEND_OPT			:= -backend=false
 	endif
 endif
 
@@ -62,7 +62,7 @@ endif
 ST_DOCKER_ENV_VARS := -e TF_WORKSPACE=$(ST_WORKSPACE)
 
 ifdef AWS_ACCESS_KEY_ID
-	ST_DOCKER_ENV_VARS += -e TF_WORKSPACE=$(ST_WORKSPACE) -e AWS_REGION=$(AWS_REGION) -e AWS_ACCESS_KEY_ID=$(AWS_ACCESS_KEY_ID) -e AWS_SECRET_ACCESS_KEY=$(AWS_SECRET_ACCESS_KEY) -e AWS_SESSION_TOKEN=$(AWS_SESSION_TOKEN)
+	ST_DOCKER_ENV_VARS += -e AWS_REGION=$(AWS_REGION) -e AWS_ACCESS_KEY_ID=$(AWS_ACCESS_KEY_ID) -e AWS_SECRET_ACCESS_KEY=$(AWS_SECRET_ACCESS_KEY) -e AWS_SESSION_TOKEN=$(AWS_SESSION_TOKEN)
 endif
 
 ifdef DD_APP_KEY
@@ -72,9 +72,9 @@ endif
 ST_TF_STACK_DIR		:= $(ST_TF_BASE_DIR)/definitions/$(STACK_NAME)
 ST_TF_TMP_DIR		:= $(ST_TF_BASE_DIR)/tmp
 ST_TF_PLAN_FILE		:= $(STACK_NAME)-$(ENVIRONMENT)-$(ST_WORKSPACE).tfplan
-ST_TF_OUTPUT_PATH	:= $(ST_TF_TMP_DIR)/$(ST_TF_PLAN_FILE)
+ST_TF_PLAN_PATH		:= $(ST_TF_TMP_DIR)/$(ST_TF_PLAN_FILE)
 ST_TF_CHDIR_OPT		:= -chdir=$(ST_TF_BASE_DIR)/definitions/$(STACK_NAME)
-ST_TF_PLAN_FILE_OPT	:= -out=$(ST_TF_OUTPUT_PATH)
+ST_TF_PLAN_FILE_OPT	:= -out=$(ST_TF_PLAN_PATH)
 ST_TF_VAR_FILES_OPT	:= -var-file=$(ST_TF_BASE_DIR)/environments/all/$(STACK_NAME).tfvars -var-file=$(ST_TF_BASE_DIR)/environments/$(ENVIRONMENT)/$(STACK_NAME).tfvars
 
 ###### Terraform Command ######
@@ -111,7 +111,7 @@ stacks-list:
 
 .PHONY: stack-apply
 stack-apply:
-	@$(ST_TF_RUN_CMD) $(ST_TF_CHDIR_OPT) apply -auto-approve $(ST_TF_OUTPUT_PATH)
+	@$(ST_TF_RUN_CMD) $(ST_TF_CHDIR_OPT) apply -auto-approve $(ST_TF_PLAN_PATH)
 
 .PHONY: stack-check-fmt
 stack-check-fmt:
