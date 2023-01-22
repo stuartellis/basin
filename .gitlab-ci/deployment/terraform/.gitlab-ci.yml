@@ -12,16 +12,16 @@ variables:
 stages:
   - plan_terraform
 
-.build_tools_image:
+.prepare_host:
   variables:
     ST_RUNNER_VERSION: ci
   before_script:
-    - apk add make
+    - apk add jq make
     - make stackrunner-build
 
 plan_terraform:
   stage: plan_terraform
-  extends: .build_tools_image
+  extends: .prepare_host
   variables:
     ENVIRONMENT: dev
   script:
