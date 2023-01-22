@@ -17,4 +17,5 @@ check_terraform:
   script:
     - apk add make
     - make stackrunner-build ST_RUNNER_VERSION=ci
-    - make stack-check-fmt STACK_TOOLS_RUNNER_IMAGE=$(STACK_TOOLS_RUNNER_IMAGE) STACK_NAME=$STACK_NAME
+    - make stack-info
+    - make stack-check-fmt
