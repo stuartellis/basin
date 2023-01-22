@@ -12,5 +12,5 @@ check_terraform:
   image: docker:20.10.17
   script:
     - apk add make
-    - make stackrunner-build ST_RUNNER_VERSION=ci
+    - make stackrunner-build ST_RUNNER_VERSION=ci ST_RUNNER_TARGET_CPU_ARCH=amd64
     - make stack-check-fmt ST_RUNNER_VERSION=ci STACK_NAME=$(STACK_NAME)
