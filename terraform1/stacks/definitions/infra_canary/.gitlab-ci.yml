@@ -24,6 +24,7 @@ build_tools_image:
 check_terraform:
   stage: check_terraform
   script:
+    - apk add make
     - make stack-check-fmt
     - make stack-init
     - make stack-validate
