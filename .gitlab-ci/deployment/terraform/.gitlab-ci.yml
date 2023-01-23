@@ -38,20 +38,16 @@ stages:
     - make stack-init
     - make stack-apply
 
-plan_terraform_dev:
+plan_terraform:
   stage: plan_terraform
   extends:
     - .prepare_tools_host
     - .plan_terraform
-  variables:
-    ENVIRONMENT: dev
 
-apply_terraform_dev:
+apply_terraform:
   stage: apply_terraform
   dependencies:
-    - plan_terraform_dev
+    - plan_terraform
   extends:
     - .prepare_tools_host
     - .apply_terraform
-  variables:
-    ENVIRONMENT: dev

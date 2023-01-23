@@ -14,6 +14,9 @@ test_infra_canary:
 
 deploy_infra_canary:
   stage: deploy_stacks
+  variables:
+    STACK_NAME: infra_canary
+    ENVIRONMENT: dev
   trigger:
     include: .gitlab-ci/deployment/terraform/.gitlab-ci.yml
   rules:

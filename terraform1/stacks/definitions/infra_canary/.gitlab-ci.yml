@@ -24,6 +24,7 @@ validate_terraform:
   variables:
     ST_ENABLE_BACKEND: "false"
   script:
+    - make stack-info
     - make stack-check-fmt
     - make stack-init
     - make stack-validate
