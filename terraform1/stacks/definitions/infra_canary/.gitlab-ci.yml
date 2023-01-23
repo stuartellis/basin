@@ -18,9 +18,7 @@ stages:
     - apk add make
     - make stackrunner-build
 
-validate_terraform:
-  stage: validate_terraform
-  extends: .build_tools_image
+.validate_terraform:
   variables:
     ST_ENABLE_BACKEND: "false"
   script:
@@ -28,3 +26,9 @@ validate_terraform:
     - make stack-check-fmt
     - make stack-init
     - make stack-validate
+
+validate_terraform:
+  stage: validate_terraform
+  extends:
+    - .build_tools_image
+    - .validate_terraform

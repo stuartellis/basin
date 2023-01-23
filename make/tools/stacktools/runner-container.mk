@@ -28,7 +28,7 @@ ST_RUNNER_IMAGE_TAG			:= $(ST_RUNNER_APP_NAME):$(ST_RUNNER_VERSION)
 
 ###### Docker ######
 
-ST_RUNNER_DOCKER_BUILD_CMD	:= docker build
+ST_RUNNER_DOCKER_BUILD_CMD	:= docker buildx build
 
 ###### Targets ######
 
