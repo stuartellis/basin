@@ -6,7 +6,6 @@ services:
 variables:
   DOCKER_DRIVER: overlay2
   DOCKER_TLS_CERTDIR: "/certs"
-  STACK_NAME: infra_canary
   STACK_TOOLS_RUNNER_IMAGE: stacktools-runner:ci
 
 stages:

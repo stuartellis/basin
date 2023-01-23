@@ -4,6 +4,8 @@ stages:
 
 test_infra_canary:
   stage: test_stacks
+  variables:
+    STACK_NAME: infra_canary
   trigger:
     include: terraform1/stacks/definitions/infra_canary/.gitlab-ci.yml
   rules:
